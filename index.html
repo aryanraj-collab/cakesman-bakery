@@ -485,6 +485,36 @@ body.dark .menu-poster{
 html, body{
   overflow-x:hidden;
 }
+/* ====== FINAL MOBILE FIX – MENU CARD ====== */
+
+@media (max-width: 768px) {
+
+  /* BREAK THE CARD CONSTRAINT */
+  .menu-card{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  /* IMAGE GOES FULL WIDTH */
+  .menu-card img{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    display: block;
+    border-radius: 0 !important;
+  }
+}
+
+/* STOP HORIZONTAL SCROLL */
+html, body{
+  overflow-x: hidden;
+}
 
 
 </style>
