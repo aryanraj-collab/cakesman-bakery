@@ -851,7 +851,8 @@ html, body{
 
 <script>
 // SCROLL FADE-IN
-const sections = document.querySelectorAll('.hero, section, footer');
+const sections = document.querySelectorAll('.hero, section:not(.menu-poster), footer');
+
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
