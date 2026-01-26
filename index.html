@@ -421,49 +421,30 @@ body.dark .menu-poster{
   border-radius:22px;
   box-shadow:0 25px 60px rgba(0,0,0,0.2);
 }
-/* ================= MOBILE FRIENDLY MENU POSTER ================= */
+/* ===== FORCE MOBILE FRIENDLY POSTER ===== */
 
-.menu-poster{
-  padding:80px 40px;
-  text-align:center;
-  background:linear-gradient(135deg,#fff7ec,#fdebd3);
-}
-
-body.dark .menu-poster{
-  background:linear-gradient(135deg,#1c1c1c,#121212);
-}
-
-.poster-wrapper{
-  max-width:900px;
-  margin:30px auto 0;
-}
-
-/* Desktop & default */
 .poster-wrapper img{
   width:100%;
   height:auto;
-  border-radius:22px;
-  box-shadow:0 25px 60px rgba(0,0,0,0.2);
+  max-width:100%;
 }
 
-/* 📱 MOBILE OPTIMIZATION */
-@media(max-width:768px){
+/* 📱 Mobile only */
+@media screen and (max-width:768px){
   .menu-poster{
-    padding:50px 16px;
+    padding:30px 12px !important;
   }
 
-  .menu-poster h2{
-    font-size:24px;
-  }
-
-  .menu-poster .sub{
-    font-size:14px;
-    margin-bottom:20px;
+  .poster-wrapper{
+    width:100% !important;
+    max-width:100% !important;
   }
 
   .poster-wrapper img{
-    border-radius:14px;
-    box-shadow:0 15px 40px rgba(0,0,0,0.18);
+    width:100% !important;
+    height:auto !important;
+    border-radius:12px;
+    display:block;
   }
 }
 
