@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cakesman Bakery</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Poppins', Arial, sans-serif;
+    }
+
+    body{
+      background:#fff;
+      color:#2b1b1b;
+    }
+
+    /* HEADER */
+    header{
+      background:#fdebd3;
+      padding:22px 60px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    header h1{
+      font-size:28px;
+      color:#e63946;
+      font-weight:700;
+      letter-spacing:1px;
+    }
+
+    .tilt{
+      display:inline-block;
+      transform:rotate(-12deg) translateY(-4px);
+      color:#c1121f;
+    }
+
+    nav a{
+      margin:0 14px;
+      text-decoration:none;
+      color:#333;
+      font-size:15px;
+    }
+
+    /* HERO */
+    .hero{
+      background:#fdebd3;
+      padding:70px 60px 120px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      position:relative;
+    }
+
+    .hero::after{
+      content:'';
+      position:absolute;
+      bottom:-1px;
+      left:0;
+      width:100%;
+      height:120px;
+      background:white;
+      border-top-left-radius:100% 40px;
+      border-top-right-radius:100% 40px;
+    }
+
+    .hero-text{
+      max-width:480px;
+    }
+
+    .hero-text h2{
+      font-size:42px;
+      margin-bottom:18px;
+    }
+
+    .hero-text p{
+      font-size:15px;
+      color:#555;
+      margin-bottom:28px;
+    }
+
+    .btn{
+      padding:12px 26px;
+      border-radius:30px;
+      text-decoration:none;
+      font-size:14px;
+      margin-right:12px;
+      display:inline-block;
+    }
+
+    .btn.light{
+      border:2px solid #e63946;
+      color:#e63946;
+    }
+
+    .btn.primary{
+      background:#e63946;
+      color:#fff;
+    }
+
+    .hero-img img{
+      width:460px;
+    }
+
+    /* SPECIALS */
+    section{
+      padding:90px 70px;
+      background:#fff;
+    }
+
+    section h2{
+      text-align:center;
+      font-size:32px;
+      margin-bottom:10px;
+    }
+
+    section p.sub{
+      text-align:center;
+      color:#777;
+      margin-bottom:50px;
+    }
+
+    .products{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:30px;
+    }
+
+    .card{
+      background:#fff;
+      border-radius:22px;
+      padding:24px 20px 28px;
+      text-align:center;
+      box-shadow:0 18px 40px rgba(0,0,0,0.10);
+      position:relative;
+      transition:transform 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-10px) scale(1.02);
+      box-shadow:0 30px 70px rgba(0,0,0,0.18);
+    }
+
+    .card img{
+      transition:transform 0.4s ease;
+    }
+
+    .card:hover img{
+      transform:scale(1.08);
+    }
+
+    .card img{
+      width:100%;
+      height:180px;
+      object-fit:contain;
+      margin-bottom:12px;
+    }
+
+    .card h3{
+      font-size:16px;
+      margin-bottom:8px;
+    }
+
+    .price{
+      color:#e63946;
+      font-weight:700;
+      margin-bottom:12px;
+    }
+
+    .order{
+      background:#e63946;
+      color:#fff;
+      border:none;
+      padding:10px 18px;
+      border-radius:22px;
+      font-size:13px;
+      cursor:pointer;
+    }
+
+    .heart{
+      position:absolute;
+      top:15px;
+      right:15px;
+      color:#e63946;
+      font-size:18px;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      header{flex-direction:column;}
+      .hero{flex-direction:column;text-align:center;}
+      .hero-img img{width:90%;margin-top:40px;}
+    }
+    /* Premium Buttons */
+button {
+  border: none;
+  border-radius: 999px;
+  padding: 12px 22px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* Card Luxury Hover */
+.card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.18);
+}
+
+.card img {
+  transition: transform 0.4s ease;
+}
+
+.card:hover img {
+  transform: scale(1.08);
+}
+.float-btn {
+  position: fixed;
+  right: 20px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  color: #fff;
+  box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+  z-index: 999;
+  transition: transform 0.25s ease;
+}
+
+.float-btn:hover {
+  transform: scale(1.08);
+}
+
+.float-btn.call {
+  bottom: 96px;
+  background: #e63946;
+}
+
+.float-btn.whatsapp {
+  bottom: 30px;
+  background: #25d366;
+}
+    .lux-footer {
+  background: #2b1b1b;
+  color: #f3e6da;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.lux-footer p {
+  max-width: 520px;
+  margin: 10px auto;
+  font-size: 14px;
+  color: #e0cfc1;
+}
+
+.lux-footer .small {
+  font-size: 13px;
+  color: #cdb9aa;
+}
+
+
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Cakesm<span class="tilt">a</span>n Bakery</h1>
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Cupcake</a>
+    <a href="#">Recipes</a>
+    <a href="#">Blog</a>
+    <a href="#">Order Online</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-text">
+    <h2>Yummy sweeties delivered<br>to your dining table!</h2>
+    <p>Freshly baked cakes and cupcakes crafted with love for every celebration.</p>
+    <a href="#" class="btn light">Read More</a>
+    <a href="#" class="btn primary">Order Now</a>
+  </div>
+  <div class="hero-img">
+    <img src="images/cupcakes.png" alt="Cupcakes">
+  </div>
+</div>
+
+<section>
+  <h2>This Week’s Specials</h2>
+  <p class="sub">Try our most popular signature cupcakes and taste the difference!</p>
+
+  <div class="products">
+    <div class="card">
+      <span class="heart">♥</span>
+      <img src="images/cake1.png">
+      <h3>Pinky Cream Cherry Milk</h3>
+      <div class="price">₹350</div>
+      <button class="order">ORDER THIS</button>
+    </div>
+
+    <div class="card">
+      <span class="heart">♥</span>
+      <img src="images/cake2.png">
+      <h3>Gummy Tosca Mixed Flavors</h3>
+      <div class="price">₹420</div>
+      <button class="order">ORDER THIS</button>
+    </div>
+
+    <div class="card">
+      <span class="heart">♥</span>
+      <img src="images/cake3.png">
+      <h3>Blushing Strawberry Cream</h3>
+      <div class="price">₹390</div>
+      <button class="order">ORDER THIS</button>
+    </div>
+
+    <div class="card">
+      <span class="heart">♥</span>
+      <img src="images/cake4.png">
+      <h3>Mystery Rose Choco</h3>
+      <div class="price">₹410</div>
+      <button class="order">ORDER THIS</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT SECTION -->
+<section style="background:#fff7ec;">
+  <h2>Visit Cakesman Bakery</h2>
+  <p class="sub">Freshly baked happiness, ready for you every day.</p>
+
+  <div style="max-width:800px;margin:40px auto;text-align:center;font-size:15px;line-height:1.8;color:#555;">
+    <p><strong>📍 Address:</strong> Cakesman Bakery, Your City Name</p>
+    <p><strong>📞 Phone:</strong> +91 98765 43210</p>
+    <p><strong>🕒 Timings:</strong> 9:00 AM – 10:00 PM (All Days)</p>
+    <p style="margin-top:18px;color:#777;">We use premium ingredients, maintain strict hygiene standards, and bake fresh every day to make your celebrations special.</p>
+  </div>
+
+  <div style="max-width:900px;margin:auto;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.15);">
+    <iframe src="https://www.google.com/maps?q=india&output=embed" width="100%" height="320" style="border:0;"></iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background:#2b1b1b;color:#f3e6da;padding:40px 20px;text-align:center;">
+  <h3 style="font-size:22px;margin-bottom:10px;">Cakesman Bakery</h3>
+  <p style="max-width:520px;margin:0 auto 16px;font-size:14px;color:#e0cfc1;">
+    Baking smiles with love, care, and premium ingredients. Trusted by hundreds of happy customers for quality, taste, and hygiene.
+  </p>
+  <p style="font-size:13px;color:#cdb9aa;">© 2026 Cakesman Bakery • Freshly Baked Every Day</p>
+</footer>
+  <footer class="lux-footer">
+  <h3>Cakesman Bakery</h3>
+  <p>
+    Baking smiles with premium ingredients, strict hygiene,
+    and fresh love every day. Trusted by hundreds of happy customers.
+  </p>
+  <p class="small">© 2026 Cakesman Bakery • Freshly Baked Daily</p>
+</footer>
+
+<!-- Floating Call & WhatsApp -->
+<a href="tel:+919876543210" class="float-btn call">📞</a>
+<a href="https://wa.me/919876543210" class="float-btn whatsapp">💬</a>
+
+</body>
+</html>
