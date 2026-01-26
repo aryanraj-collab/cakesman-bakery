@@ -515,6 +515,44 @@ html, body{
 html, body{
   overflow-x: hidden;
 }
+/* ===== FINAL MOBILE FIX — MENU GRID ===== */
+
+@media (max-width: 768px){
+
+  /* BREAK GRID CONSTRAINT */
+  .menu-grid{
+    display: block !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* FULL WIDTH CARD */
+  .menu-card{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(50% - 50vw) !important;
+    margin-right: calc(50% - 50vw) !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  /* FULL WIDTH IMAGE */
+  .menu-card img{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    display: block;
+    border-radius: 0 !important;
+  }
+}
+
+/* NO HORIZONTAL SCROLL */
+html, body{
+  overflow-x: hidden;
+}
 
 
 </style>
