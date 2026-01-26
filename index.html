@@ -471,6 +471,52 @@ html, body{
   max-width:100%;
   overflow-x:hidden;
 }
+/* ===================== TRUE MOBILE FIX (FINAL) ===================== */
+
+.menu-poster{
+  padding:0 !important;
+  margin:0 !important;
+  background:none !important;
+  opacity:1 !important;
+  transform:none !important;
+}
+
+.poster-wrapper{
+  max-width:100%;
+  margin:0;
+}
+
+.poster-wrapper img{
+  width:100%;
+  height:auto;
+  display:block;
+}
+
+@media (max-width:768px){
+
+  .menu-poster{
+    width:100vw;
+    margin-left:calc(50% - 50vw);
+    margin-right:calc(50% - 50vw);
+  }
+
+  .poster-wrapper img{
+    width:100vw !important;
+    max-width:100vw !important;
+    border-radius:0;
+    box-shadow:none;
+  }
+
+  .menu-poster h2,
+  .menu-poster .sub{
+    padding:14px;
+    text-align:center;
+  }
+}
+
+html, body{
+  overflow-x:hidden;
+}
 
 
 
