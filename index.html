@@ -42,6 +42,7 @@ body.dark .hero-text p{color:#d3d3d3;}
     width:100%;
     height:120px;
     background:white;
+    pointer-events: none;
     border-top-left-radius:100% 40px;
     border-top-right-radius:100% 40px;
     transition: background 0.4s;
@@ -163,10 +164,12 @@ body.dark .menu-card{
 
 .menu-card img{
   width:100%;
-  height:180px;
-  object-fit:cover;
+  height:auto;        /* makes the height adjust to the width */
+  max-height:280px;   /* optional, sets a limit for very tall images */
+  object-fit:cover;   /* makes sure the image fills the box nicely */
   border-radius:16px;
   margin-bottom:12px;
+  transition:transform 0.4s ease;
 }
 
 .menu-card h4{
@@ -251,6 +254,153 @@ body.dark .menu-add{
     color:#fff;
   }
 }
+.why-us{
+  padding:70px 60px;
+  background:transparent; /* REMOVE BIG WHITE BOX */
+}
+
+
+body.dark .why-us{
+  background:transparent;
+}
+
+
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.why-card{
+  background:rgba(255,255,255,0.9);
+  padding:30px 20px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.1);
+  transition:transform .4s, box-shadow .4s;
+}
+body.dark .why-card{
+  background:#1e1e1e;
+}
+
+.why-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 30px 70px rgba(212,175,55,0.35);
+}
+
+.why-card i{
+  font-size:34px;
+  color:#e63946;
+  margin-bottom:12px;
+}
+body.dark .why-card i{
+  color:#d4af37;
+}
+.best-sellers{
+  padding:60px 40px;
+  background:linear-gradient(135deg,#fdebd3,#fff);
+  text-align:center;
+}
+body.dark .best-sellers{
+  background:linear-gradient(135deg,#1c1c1c,#121212);
+}
+
+.best-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+  margin-top:30px;
+}
+
+.best-item{
+  padding:14px 22px;
+  border-radius:30px;
+  background:#fff;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+  font-weight:600;
+}
+body.dark .best-item{
+  background:#1e1e1e;
+}
+.trust-strip{
+  padding:70px 40px;
+  background:#fff;
+}
+body.dark .trust-strip{
+  background:#121212;
+}
+
+.trust-stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:30px;
+  max-width:900px;
+  margin:40px auto 0;
+  text-align:center;
+}
+
+.trust-stats strong{
+  font-size:36px;
+  color:#e63946;
+  display:block;
+}
+body.dark .trust-stats strong{
+  color:#d4af37;
+}
+.admin-btn{
+  position: relative;
+  z-index: 9999;
+  pointer-events: auto;
+}
+.hero-text{
+  position: relative;
+  z-index: 5;
+}
+.admin-btn{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 99999;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+#admin-btn{
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+
+  /* FORCE ABOVE EVERYTHING */
+  z-index: 2147483647;
+
+  /* FORCE CLICK */
+  pointer-events: auto !important;
+}
+
+/* PREVENT OTHER FIXED ELEMENTS FROM BLOCKING */
+.hero::after,
+.mascot,
+#map-dark-overlay{
+  pointer-events: none;
+}
+
 
 
 </style>
@@ -296,69 +446,265 @@ body.dark .menu-add{
       <a class="btn primary glass">Order Now</a>
     </div>
   </div>
+  <section class="why-us">
+  <div class="why-grid">
+    <div class="why-card">
+      <i class="fas fa-award"></i>
+      <h4>Premium Quality</h4>
+      <p>Only the finest ingredients, baked fresh every day.</p>
+    </div>
+    <div class="why-card">
+      <i class="fas fa-heart"></i>
+      <h4>Made With Love</h4>
+      <p>Every cake is handcrafted with passion and care.</p>
+    </div>
+    <div class="why-card">
+      <i class="fas fa-truck"></i>
+      <h4>Fast Delivery</h4>
+      <p>On-time doorstep delivery for every celebration.</p>
+    </div>
+    <div class="why-card">
+      <i class="fas fa-star"></i>
+      <h4>Trusted Brand</h4>
+      <p>Loved by hundreds of happy customers.</p>
+    </div>
+  </div>
+</section>
+
   <div class="hero-img">
-    <img src="cupcakes.png" alt="Cupcakes">
+    
   </div>
 </div>
 
 <!-- SPECIALS -->
 <section>
+  <section class="best-sellers">
+  <h2>Customer Favorites</h2>
+  <p class="sub">Our most loved bakery delights</p>
+
+  <div class="best-grid">
+    <div class="best-item">🎂 Chocolate Truffle Cake</div>
+    <div class="best-item">🧁 Classic Vanilla Cupcake</div>
+    <div class="best-item">🍩 Fresh Cream Doughnuts</div>
+    <div class="best-item">🥐 Butter Croissants</div>
+  </div>
+</section>
+
   <h2>This Week’s Specials</h2>
   <section class="menu-section">
   <h2>Our Premium Menu</h2>
   <p class="sub">Handcrafted delights with premium ingredients</p>
+  <div class="menu-filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="cake">Cakes</button>
+    <button class="filter-btn" data-filter="pastry">Pastry</button>
+    <button class="filter-btn" data-filter="snack">Snacks</button>
+  </div>
 
   <div class="menu-grid">
 
-    <!-- CAKES -->
-    <div class="menu-card">
-      <img src="images/redvelvet.jpg">
-      <h4>Red Velvet Cake</h4>
-      <div class="menu-price">₹400 / Half KG</div>
-      <div class="qty-box">
-        <button>-</button><span>1</span><button>+</button>
-      </div>
-      <button class="menu-add" data-name="Red Velvet Cake" data-price="400">
-        Add to Cart
-      </button>
+    <!-- Vanilla Cake -->
+    <div class="menu-card" data-name="Vanilla" data-half="250" data-full="500">
+      <img src="vanila-cake.jpg" alt="Vanilla Cake" loading="lazy">
+      <h4>Vanilla Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹250</option>
+        <option value="full">1 KG – ₹500</option>
+      </select>
+      <div class="menu-price">₹250</div>
+      <button class="menu-add">Add to Cart</button>
     </div>
 
-    <div class="menu-card">
-      <img src="images/blackforest.jpg">
+    <!-- Pineapple Cake -->
+    <div class="menu-card" data-name="Pineapple" data-half="280" data-full="550">
+      <img src="pineapple-cake.jpg" alt="Pineapple Cake" loading="lazy">
+      <h4>Pineapple Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹280</option>
+        <option value="full">1 KG – ₹550</option>
+      </select>
+      <div class="menu-price">₹280</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Butter Scotch Cake -->
+    <div class="menu-card" data-name="Butter Scotch" data-half="285" data-full="570">
+      <img src="butter-scotch-cake.jpg" alt="Butter Scotch Cake" loading="lazy">
+      <h4>Butter Scotch Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹285</option>
+        <option value="full">1 KG – ₹570</option>
+      </select>
+      <div class="menu-price">₹285</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- White Forest Cake -->
+    <div class="menu-card" data-name="White Forest" data-half="285" data-full="570">
+      <img src="white-forest-cake.jpg" alt="White Forest Cake" loading="lazy">
+      <h4>White Forest Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹285</option>
+        <option value="full">1 KG – ₹570</option>
+      </select>
+      <div class="menu-price">₹285</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Black Forest Cake -->
+    <div class="menu-card" data-name="Black Forest" data-half="285" data-full="570">
+      <img src="black-forest-cake.jpg" alt="Black Forest Cake" loading="lazy">
       <h4>Black Forest Cake</h4>
-      <div class="menu-price">₹285 / Half KG</div>
-      <div class="qty-box">
-        <button>-</button><span>1</span><button>+</button>
-      </div>
-      <button class="menu-add" data-name="Black Forest Cake" data-price="285">
-        Add to Cart
-      </button>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹285</option>
+        <option value="full">1 KG – ₹570</option>
+      </select>
+      <div class="menu-price">₹285</div>
+      <button class="menu-add">Add to Cart</button>
     </div>
 
-    <!-- PASTRY -->
-    <div class="menu-card">
-      <img src="images/pastry.jpg">
-      <h4>Chocolate Pastry</h4>
-      <div class="menu-price">₹50</div>
-      <div class="qty-box">
-        <button>-</button><span>1</span><button>+</button>
-      </div>
-      <button class="menu-add" data-name="Chocolate Pastry" data-price="50">
-        Add to Cart
-      </button>
+    <!-- Black Currant Cake -->
+    <div class="menu-card" data-name="Black Currant" data-half="350" data-full="650">
+      <img src="black-currant-cake.jpg" alt="Black Currant Cake" loading="lazy">
+      <h4>Black Currant Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹350</option>
+        <option value="full">1 KG – ₹650</option>
+      </select>
+      <div class="menu-price">₹350</div>
+      <button class="menu-add">Add to Cart</button>
     </div>
 
-    <!-- SNACK -->
-    <div class="menu-card">
-      <img src="images/burger.jpg">
-      <h4>Veg Burger</h4>
-      <div class="menu-price">₹40</div>
-      <div class="qty-box">
-        <button>-</button><span>1</span><button>+</button>
-      </div>
-      <button class="menu-add" data-name="Veg Burger" data-price="40">
-        Add to Cart
-      </button>
+    <!-- Choco Chip Cake -->
+    <div class="menu-card" data-name="Choco Chip" data-half="350" data-full="650">
+      <img src="choco-chip-cake.jpg" alt="Choco Chip Cake" loading="lazy">
+      <h4>Choco Chip Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹350</option>
+        <option value="full">1 KG – ₹650</option>
+      </select>
+      <div class="menu-price">₹350</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Brownie Cake -->
+    <div class="menu-card" data-name="Brownie" data-half="320" data-full="640">
+      <img src="brownie-cake.jpg" alt="Brownie Cake" loading="lazy">
+      <h4>Brownie Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹320</option>
+        <option value="full">1 KG – ₹640</option>
+      </select>
+      <div class="menu-price">₹320</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Mix Fruit Cake -->
+    <div class="menu-card" data-name="Mix Fruit" data-half="350" data-full="650">
+      <img src="mix-fruit-cake.jpg" alt="Mix Fruit Cake" loading="lazy">
+      <h4>Mix Fruit Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹350</option>
+        <option value="full">1 KG – ₹650</option>
+      </select>
+      <div class="menu-price">₹350</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Fresh Fruit Cake -->
+    <div class="menu-card" data-name="Fresh Fruit" data-half="400" data-full="700">
+      <img src="fresh-fruit-cake.jpg" alt="Fresh Fruit Cake" loading="lazy">
+      <h4>Fresh Fruit Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹400</option>
+        <option value="full">1 KG – ₹700</option>
+      </select>
+      <div class="menu-price">₹400</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Red Velvet Cake -->
+    <div class="menu-card" data-name="Red Velvet" data-half="400" data-full="800">
+      <img src="red-velvet-cake.jpg" alt="Red Velvet Cake" loading="lazy">
+      <h4>Red Velvet Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹400</option>
+        <option value="full">1 KG – ₹800</option>
+      </select>
+      <div class="menu-price">₹400</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Blue Berry Cake -->
+    <div class="menu-card" data-name="Blue Berry" data-half="350" data-full="650">
+      <img src="blue-berry-cake.jpg" alt="Blue Berry Cake" loading="lazy">
+      <h4>Blue Berry Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹350</option>
+        <option value="full">1 KG – ₹650</option>
+      </select>
+      <div class="menu-price">₹350</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Strawberry Cake -->
+    <div class="menu-card" data-name="Strawberry" data-half="280" data-full="550">
+      <img src="strawberry-cake.jpg" alt="Strawberry Cake" loading="lazy">
+      <h4>Strawberry Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹280</option>
+        <option value="full">1 KG – ₹550</option>
+      </select>
+      <div class="menu-price">₹280</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Doll Cake -->
+    <div class="menu-card" data-name="Doll Cake" data-half="400" data-full="700">
+      <img src="doll-cake.jpg" alt="Doll Cake" loading="lazy">
+      <h4>Doll Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹400</option>
+        <option value="full">1 KG – ₹700</option>
+      </select>
+      <div class="menu-price">₹400</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- KitKat Cake -->
+    <div class="menu-card" data-name="KitKat Cake" data-half="480" data-full="850">
+      <img src="kitkat-cake.jpg" alt="KitKat Cake" loading="lazy">
+      <h4>KitKat Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹480</option>
+        <option value="full">1 KG – ₹850</option>
+      </select>
+      <div class="menu-price">₹480</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Choco Coffee Cake -->
+    <div class="menu-card" data-name="Choco Coffee" data-half="400" data-full="700">
+      <img src="choco-coffee-cake.jpg" alt="Choco Coffee Cake" loading="lazy">
+      <h4>Choco Coffee Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹400</option>
+        <option value="full">1 KG – ₹700</option>
+      </select>
+      <div class="menu-price">₹400</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Choco Truffle Cake -->
+    <div class="menu-card" data-name="Choco Truffle" data-half="450" data-full="850">
+      <img src="choco-truffle-cake.jpg" alt="Choco Truffle Cake" loading="lazy">
+      <h4>Choco Truffle Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹450</option>
+        <option value="full">1 KG – ₹850</option>
+      </select>
+      <div class="menu-price">₹450</div>
+      <button class="menu-add">Add to Cart</button>
     </div>
 
   </div>
@@ -391,6 +737,18 @@ body.dark .menu-add{
                                                                   style="border-radius:12px;background:#fff;padding:10px">
                                                                  <p style="font-size:13px;margin-top:8px;">Scan to view menu & order instantly</p>
                                                                 </div>
+
+                                                                <section class="trust-strip">
+  <h2>Why Customers Love Us</h2>
+  <p class="sub">Serving smiles, one bite at a time</p>
+
+  <div class="trust-stats">
+    <div><strong>500+</strong><span>Happy Customers</span></div>
+    <div><strong>50+</strong><span>Daily Orders</span></div>
+    <div><strong>5★</strong><span>Customer Rating</span></div>
+    <div><strong>8+</strong><span>Years Experience</span></div>
+  </div>
+</section>
 
 <footer>
   <h3>Cakesman Bakery</h3>
@@ -543,28 +901,42 @@ document.getElementById('checkout-btn').addEventListener('click', ()=>{
   );
 });
 
-// MENU ADD TO CART WITH QTY
-document.querySelectorAll('.menu-card').forEach(card=>{
-  let qty = 1;
-  const minus = card.querySelector('.qty-box button:first-child');
-  const plus = card.querySelector('.qty-box button:last-child');
-  const qtyText = card.querySelector('.qty-box span');
-  const addBtn = card.querySelector('.menu-add');
+document.querySelectorAll(".menu-card").forEach(card=>{
+  const select = card.querySelector(".weight-select");
+  const priceBox = card.querySelector(".menu-price");
+  const addBtn = card.querySelector(".menu-add");
 
-  minus.onclick = ()=>{ if(qty>1){qty--;qtyText.textContent=qty;} };
-  plus.onclick = ()=>{ qty++; qtyText.textContent=qty; };
+  select.addEventListener("change", ()=>{
+    const price =
+      select.value === "half"
+      ? card.dataset.half
+      : card.dataset.full;
 
-  addBtn.onclick = ()=>{
-    const name = addBtn.dataset.name;
-    const price = parseInt(addBtn.dataset.price);
-    const existing = cart.find(i=>i.name===name);
-    if(existing) existing.qty += qty;
-    else cart.push({name,price,qty});
+    priceBox.textContent = "₹" + price;
+  });
+
+  addBtn.addEventListener("click", ()=>{
+    const weight = select.value === "half" ? "Half KG" : "1 KG";
+    const price = parseInt(
+      select.value === "half"
+      ? card.dataset.half
+      : card.dataset.full
+    );
+
+    const name = `${card.dataset.name} (${weight})`;
+
+    const existing = cart.find(item => item.name === name);
+    if(existing){
+      existing.qty++;
+    }else{
+      cart.push({ name, price, qty: 1 });
+    }
+
     renderCart();
-    cartSidebar.style.right='0';
-    qty=1; qtyText.textContent=1;
-  };
+    cartSidebar.style.right = "0";
+  });
 });
+
 document.getElementById("mobile-wa").onclick = ()=>{
   document.getElementById("checkout-btn").click();
 };
@@ -584,6 +956,42 @@ document.getElementById('admin-login').onclick = ()=>{
     alert("Wrong PIN");
   }
 };
+document.querySelector('.admin-btn').onclick = () => {
+  document.getElementById('admin-panel').style.display = 'block';
+};
+document.getElementById('admin-btn').addEventListener('click', () => {
+  const panel = document.getElementById('admin-panel');
+  panel.style.display = 'block';
+});
+document.querySelectorAll(".menu-card").forEach(card=>{
+  const select = card.querySelector(".weight-select");
+  const priceBox = card.querySelector(".menu-price");
+  const addBtn = card.querySelector(".menu-add");
+
+  select.addEventListener("change", ()=>{
+    const price = select.value === "half"
+      ? card.dataset.half
+      : card.dataset.full;
+    priceBox.textContent = "₹" + price;
+  });
+
+  addBtn.addEventListener("click", ()=>{
+    const weight = select.value === "half" ? "Half KG" : "1 KG";
+    const price = parseInt(select.value === "half"
+      ? card.dataset.half
+      : card.dataset.full);
+
+    const name = `${card.dataset.name} (${weight})`;
+    const existing = cart.find(i=>i.name===name);
+
+    if(existing) existing.qty++;
+    else cart.push({name, price, qty:1});
+
+    renderCart();
+    cartSidebar.style.right="0";
+  });
+});
+
 
 
 </script>
@@ -642,6 +1050,7 @@ Login
   style="width:100%;">🗑 Clear Cart</button>
 </div>
 </div>
+<button id="admin-btn">⚙️</button>
 
 </body>
 </html>
