@@ -1,352 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cakesman Bakery</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cakesman Bakery</title>
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+/* GLOBAL */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins', Arial, sans-serif;}
+body{background:#fff;color:#2b1b1b;overflow-x:hidden;transition:background 0.5s,color 0.5s;}
+body.dark{background:#121212;color:#f3e6da;}
+a{cursor:pointer;text-decoration:none;position:relative;}
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:'Poppins', Arial, sans-serif;
-    }
+/* HEADER */
+header{background:#fdebd3;padding:22px 60px;display:flex;align-items:center;justify-content:space-between;position:relative;transition: background 0.4s;}
+body.dark header{background:#1e1e1e;}
+header h1{font-size:36px;color:#e63946;font-weight:700;letter-spacing:1px;}
+.tilt{display:inline-block;transform:rotate(-12deg) translateY(-4px);color:#c1121f;}
+nav a{margin:0 14px;font-size:16px;color:#333;transition:color 0.4s;}
+body.dark nav a{color:#f3e6da;}
+nav a:hover{color:#e63946;}
+nav a i{margin-right:6px;}
 
-    body{
-      background:#fff;
-      color:#2b1b1b;
-    }
+/* HERO */
+.hero{background:#fdebd3;padding:70px 60px 120px;display:flex;align-items:center;justify-content:space-between;position:relative;opacity:0;transform:translateY(30px);transition: all 0.8s ease-out;perspective:1000px;overflow:hidden;}
+body.dark .hero{background:#1c1c1c;}
+.hero-text{max-width:480px;}
+.hero-text h2{font-size:42px;margin-bottom:18px;}
+.hero-text p{font-size:15px;color:#555;margin-bottom:28px;}
+body.dark .hero-text p{color:#d3d3d3;}
+.hero-img{width:460px;transition:transform 0.2s ease-out;will-change:transform;}
+.hero-img img{width:100%;transform:translateZ(0);transition: transform 0.2s ease-out;}
 
-    /* HEADER */
-    header{
-      background:#fdebd3;
-      padding:22px 60px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-    }
+/* HERO BOTTOM CURVE */
+.hero::after{
+    content:'';
+    position:absolute;
+    bottom:-1px;
+    left:0;
+    width:100%;
+    height:120px;
+    background:white;
+    border-top-left-radius:100% 40px;
+    border-top-right-radius:100% 40px;
+    transition: background 0.4s;
+}
+body.dark .hero::after{
+    background:#121212;
+}
 
-    header h1{
-      font-size:28px;
-      color:#e63946;
-      font-weight:700;
-      letter-spacing:1px;
-    }
+/* BUTTONS */
+.btn, .order{position:relative;overflow:hidden;border:none;padding:12px 26px;border-radius:30px;font-size:14px;cursor:pointer;display:inline-block;transition: all 0.3s ease;}
+.btn.light{border:2px solid #e63946;color:#e63946;background:none;}
+.btn.light:hover{background:#e63946;color:#fff;transform:scale(1.05);}
+.btn.primary{background:#e63946;color:#fff;}
+.btn.primary:hover{background:#c1121f;transform:scale(1.05);}
+.order{background:#e63946;color:#fff;border-radius:22px;animation:pulse 2s infinite;}
+.order:hover{background:#c1121f;transform:scale(1.05);}
+body.dark .btn.light{border:2px solid #d4af37;color:#d4af37;}
+body.dark .btn.light:hover{background:#d4af37;color:#121212;}
+body.dark .btn.primary,body.dark .order{background:#d4af37;color:#121212;}
+body.dark .btn.primary:hover,body.dark .order:hover{background:#b89525;}
 
-    .tilt{
-      display:inline-block;
-      transform:rotate(-12deg) translateY(-4px);
-      color:#c1121f;
-    }
-
-    nav a{
-      margin:0 14px;
-      text-decoration:none;
-      color:#333;
-      font-size:15px;
-    }
-
-    /* HERO */
-    .hero{
-      background:#fdebd3;
-      padding:70px 60px 120px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      position:relative;
-    }
-
-    .hero::after{
-      content:'';
-      position:absolute;
-      bottom:-1px;
-      left:0;
-      width:100%;
-      height:120px;
-      background:white;
-      border-top-left-radius:100% 40px;
-      border-top-right-radius:100% 40px;
-    }
-
-    .hero-text{
-      max-width:480px;
-    }
-
-    .hero-text h2{
-      font-size:42px;
-      margin-bottom:18px;
-    }
-
-    .hero-text p{
-      font-size:15px;
-      color:#555;
-      margin-bottom:28px;
-    }
-
-    .btn{
-      padding:12px 26px;
-      border-radius:30px;
-      text-decoration:none;
-      font-size:14px;
-      margin-right:12px;
-      display:inline-block;
-    }
-
-    .btn.light{
-      border:2px solid #e63946;
-      color:#e63946;
-    }
-
-    .btn.primary{
-      background:#e63946;
-      color:#fff;
-    }
-
-    .hero-img img{
-      width:460px;
-    }
-
-    /* SPECIALS */
-    section{
-      padding:90px 70px;
-      background:#fff;
-    }
-
-    section h2{
-      text-align:center;
-      font-size:32px;
-      margin-bottom:10px;
-    }
-
-    section p.sub{
-      text-align:center;
-      color:#777;
-      margin-bottom:50px;
-    }
-
-    .products{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-      gap:30px;
-    }
-
-    .card{
-      background:#fff;
-      border-radius:22px;
-      padding:24px 20px 28px;
-      text-align:center;
-      box-shadow:0 18px 40px rgba(0,0,0,0.10);
-      position:relative;
-      transition:transform 0.35s ease, box-shadow 0.35s ease;
-    }
-
-    .card:hover{
-      transform:translateY(-10px) scale(1.02);
-      box-shadow:0 30px 70px rgba(0,0,0,0.18);
-    }
-
-    .card img{
-      transition:transform 0.4s ease;
-    }
-
-    .card:hover img{
-      transform:scale(1.08);
-    }
-
-    .card img{
-      width:100%;
-      height:180px;
-      object-fit:contain;
-      margin-bottom:12px;
-    }
-
-    .card h3{
-      font-size:16px;
-      margin-bottom:8px;
-    }
-
-    .price{
-      color:#e63946;
-      font-weight:700;
-      margin-bottom:12px;
-    }
-
-    .order{
-      background:#e63946;
-      color:#fff;
-      border:none;
-      padding:10px 18px;
-      border-radius:22px;
-      font-size:13px;
-      cursor:pointer;
-    }
-
-    .heart{
-      position:absolute;
-      top:15px;
-      right:15px;
-      color:#e63946;
-      font-size:18px;
-    }
-
-    /* RESPONSIVE */
-    @media(max-width:900px){
-      header{flex-direction:column;}
-      .hero{flex-direction:column;text-align:center;}
-      .hero-img img{width:90%;margin-top:40px;}
-    }
-    /* Premium Buttons */
-button {
-  border: none;
-  border-radius: 999px;
-  padding: 12px 22px;
+/* FIXED GLASS EFFECT BUTTONS */
+.btn.glass{
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #e63946;  /* visible in light mode */
   font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition: all 0.3s ease;
 }
 
-button:hover {
-  transform: translateY(-2px);
+.btn.glass:hover{
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.25);
+  color: #c1121f;
 }
 
-/* Card Luxury Hover */
-.card {
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+body.dark .btn.glass{
+  background: rgba(212,175,55,0.15);
+  border: 1px solid rgba(212,175,55,0.4);
+  color: #fff; /* visible in dark mode */
 }
 
-.card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 30px 70px rgba(0,0,0,0.18);
+body.dark .btn.glass:hover{
+  background: rgba(212,175,55,0.25);
+  color: #121212;
 }
 
-.card img {
-  transition: transform 0.4s ease;
+/* BUTTON RIPPLE EFFECT */
+.btn span.ripple, .order span.ripple{position:absolute;border-radius:50%;transform:scale(0);animation:ripple 0.6s linear;background: rgba(255,255,255,0.7);}
+body.dark .btn span.ripple,body.dark .order span.ripple{background: rgba(0,0,0,0.4);}
+@keyframes ripple{to{transform:scale(4);opacity:0;}}
+
+/* CART PULSE */
+@keyframes cart-pulse{0%{transform: scale(1);}25%{transform: scale(1.2);}50%{transform: scale(1);}75%{transform: scale(1.2);}100%{transform: scale(1);}}
+
+/* SPECIALS */
+section{padding:90px 70px;background:#fff;opacity:0;transform:translateY(30px);transition: all 0.8s ease-out;}
+body.dark section{background:#1c1c1c;}
+section h2{text-align:center;font-size:32px;margin-bottom:10px;}
+section p.sub{text-align:center;color:#777;margin-bottom:50px;}
+body.dark section p.sub{color:#d3d3d3;}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;}
+.card{background:#fff;border-radius:22px;padding:24px 20px 28px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,0.10);position:relative;transition:all 0.4s ease;cursor:pointer;}
+body.dark .card{background:#1e1e1e;}
+.card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 30px 70px rgba(0,0,0,0.18);}
+.card img{width:100%;height:180px;object-fit:contain;margin-bottom:12px;transition:transform 0.4s ease;}
+.card:hover img{transform:scale(1.08);}
+.heart{position:absolute;top:15px;right:15px;color:#e63946;font-size:18px;}
+
+/* MASCOT */
+.mascot{position:fixed;bottom:120px;left:20px;font-size:48px;animation:float 3s ease-in-out infinite;z-index:999;cursor:pointer;transition: transform 0.3s, bottom 0.3s;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+
+/* DARK MODE TOGGLE */
+
+#dark-toggle{position:fixed;top:80px;right:20px;width:50px;height:50px;border-radius:50%;border:none;background:#111;color:#fff;font-size:24px;z-index:1000;cursor:pointer;box-shadow:0 5px 20px rgba(0,0,0,0.3);transition: transform 0.3s;}
+#dark-toggle:hover{transform:scale(1.1);}
+
+/* FOOTER */
+footer{background:#2b1b1b;color:#f3e6da;padding:40px 20px;text-align:center;transition:background 0.5s,color 0.5s;opacity:0;transform:translateY(30px);}
+body.dark footer{background:#121212;color:#f3e6da;}
+footer p{max-width:520px;margin:0 auto 16px;font-size:14px;color:#e0cfc1;}
+
+/* RESPONSIVE */
+@media(max-width:900px){header{flex-direction:column;}.hero{flex-direction:column;text-align:center;}.hero-img img{width:90%;margin-top:40px;}}
+/* ================= PREMIUM MENU ================= */
+.menu-section{
+  padding:90px 70px;
+  background:linear-gradient(135deg,#fff7ec,#fdebd3);
+}
+body.dark .menu-section{
+  background:linear-gradient(135deg,#121212,#1c1c1c);
 }
 
-.card:hover img {
-  transform: scale(1.08);
-}
-.float-btn {
-  position: fixed;
-  right: 20px;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 22px;
-  color: #fff;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.25);
-  z-index: 999;
-  transition: transform 0.25s ease;
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
 }
 
-.float-btn:hover {
-  transform: scale(1.08);
+.menu-card{
+  background:rgba(255,255,255,0.85);
+  border-radius:22px;
+  padding:18px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.15);
+  transition:all .4s ease;
+  position:relative;
+}
+body.dark .menu-card{
+  background:rgba(30,30,30,0.9);
 }
 
-.float-btn.call {
-  bottom: 96px;
-  background: #e63946;
+.menu-card:hover{
+  transform:translateY(-12px) scale(1.03);
+  box-shadow:0 35px 80px rgba(212,175,55,.35);
 }
 
-.float-btn.whatsapp {
-  bottom: 30px;
-  background: #25d366;
-}
-    .lux-footer {
-  background: #2b1b1b;
-  color: #f3e6da;
-  padding: 40px 20px;
-  text-align: center;
+.menu-card img{
+  width:100%;
+  height:180px;
+  object-fit:cover;
+  border-radius:16px;
+  margin-bottom:12px;
 }
 
-.lux-footer p {
-  max-width: 520px;
-  margin: 10px auto;
-  font-size: 14px;
-  color: #e0cfc1;
+.menu-card h4{
+  font-size:17px;
+  margin-bottom:6px;
 }
 
-.lux-footer .small {
-  font-size: 13px;
-  color: #cdb9aa;
+.menu-price{
+  font-weight:700;
+  color:#e63946;
+  margin-bottom:8px;
+}
+body.dark .menu-price{
+  color:#d4af37;
+}
+
+.qty-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.qty-box button{
+  width:28px;
+  height:28px;
+  border:none;
+  border-radius:50%;
+  background:#e63946;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
+body.dark .qty-box button{
+  background:#d4af37;
+  color:#121212;
+}
+
+.menu-add{
+  width:100%;
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(135deg,#e63946,#c1121f);
+  color:#fff;
+}
+body.dark .menu-add{
+  background:linear-gradient(135deg,#d4af37,#b89525);
+  color:#121212;
+}
+.menu-add:hover{
+  transform:scale(1.05);
+}
+#mobile-order-bar{
+  display:none;
+}
+@media(max-width:768px){
+  #mobile-order-bar{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#fff;
+    box-shadow:0 -10px 30px rgba(0,0,0,.2);
+    z-index:9999;
+  }
+  body.dark #mobile-order-bar{
+    background:#121212;
+  }
+  #mobile-order-bar div{
+    flex:1;
+    padding:14px;
+    text-align:center;
+    font-weight:700;
+    cursor:pointer;
+  }
+  #mobile-wa{
+    background:#25D366;
+    color:#fff;
+  }
 }
 
 
-  </style>
+</style>
 </head>
 <body>
 
 <header>
   <h1>Cakesm<span class="tilt">a</span>n Bakery</h1>
   <nav>
-    <a href="#">Home</a>
-    <a href="#">Cupcake</a>
-    <a href="#">Recipes</a>
-    <a href="#">Blog</a>
-    <a href="#">Order Online</a>
-    <a href="#">Contact</a>
+    <a href="#"><i class="fas fa-home"></i> Home</a>
+    <a href="#"><i class="fas fa-birthday-cake"></i> Cupcake</a>
+    <a href="#"><i class="fas fa-book"></i> Recipes</a>
+    <a href="#"><i class="fas fa-blog"></i> Blog</a>
+    <a href="#"><i class="fas fa-shopping-cart"></i> Order Online</a>
+    <a href="#"><i class="fas fa-phone"></i> Contact</a>
   </nav>
 </header>
 
+<!-- CART ICON -->
+<div id="cart-icon" style="position:fixed;top:20px;right:20px;width:50px;height:50px;background:#e63946;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;z-index:999;box-shadow:0 5px 15px rgba(0,0,0,0.3);">🛒<span id="cart-count" style="position:absolute;top:-6px;right:-6px;background:#fff;color:#e63946;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;">0</span></div>
+
+<!-- DARK MODE TOGGLE BELOW CART ICON -->
+<button id="dark-toggle">🌙</button>
+
+<!-- MASCOT -->
+<div class="mascot">🐻🍰</div>
+
+<!-- CART SIDEBAR -->
+<div id="cart-sidebar" style="position:fixed;top:0;right:-320px;height:100vh;width:300px;background:#fff;box-shadow:-5px 0 30px rgba(0,0,0,0.2);padding:20px;overflow-y:auto;transition:right 0.4s;z-index:999;">
+  <h3>Your Cart</h3>
+  <div id="cart-items"></div>
+  <div style="margin-top:10px;font-weight:700;">Total: ₹<span id="cart-total">0</span></div>
+  <button id="checkout-btn" style="width:100%;padding:10px;margin-top:15px;border:none;border-radius:8px;background:#25D366;color:#fff;font-weight:700;cursor:pointer;">Checkout via WhatsApp</button>
+</div>
+
+<!-- HERO -->
 <div class="hero">
   <div class="hero-text">
     <h2>Yummy sweeties delivered<br>to your dining table!</h2>
     <p>Freshly baked cakes and cupcakes crafted with love for every celebration.</p>
-    <a href="#" class="btn light">Read More</a>
-    <a href="#" class="btn primary">Order Now</a>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a class="btn glass">Read More</a>
+      <a class="btn primary glass">Order Now</a>
+    </div>
   </div>
   <div class="hero-img">
-    <img src="images/cupcakes.png" alt="Cupcakes">
+    <img src="cupcakes.png" alt="Cupcakes">
   </div>
 </div>
 
+<!-- SPECIALS -->
 <section>
   <h2>This Week’s Specials</h2>
-  <p class="sub">Try our most popular signature cupcakes and taste the difference!</p>
+  <section class="menu-section">
+  <h2>Our Premium Menu</h2>
+  <p class="sub">Handcrafted delights with premium ingredients</p>
 
-  <div class="products">
-    <div class="card">
-      <span class="heart">♥</span>
-      <img src="images/cake1.png">
-      <h3>Pinky Cream Cherry Milk</h3>
-      <div class="price">₹350</div>
-      <button class="order">ORDER THIS</button>
+  <div class="menu-grid">
+
+    <!-- CAKES -->
+    <div class="menu-card">
+      <img src="images/redvelvet.jpg">
+      <h4>Red Velvet Cake</h4>
+      <div class="menu-price">₹400 / Half KG</div>
+      <div class="qty-box">
+        <button>-</button><span>1</span><button>+</button>
+      </div>
+      <button class="menu-add" data-name="Red Velvet Cake" data-price="400">
+        Add to Cart
+      </button>
     </div>
 
-    <div class="card">
-      <span class="heart">♥</span>
-      <img src="images/cake2.png">
-      <h3>Gummy Tosca Mixed Flavors</h3>
-      <div class="price">₹420</div>
-      <button class="order">ORDER THIS</button>
+    <div class="menu-card">
+      <img src="images/blackforest.jpg">
+      <h4>Black Forest Cake</h4>
+      <div class="menu-price">₹285 / Half KG</div>
+      <div class="qty-box">
+        <button>-</button><span>1</span><button>+</button>
+      </div>
+      <button class="menu-add" data-name="Black Forest Cake" data-price="285">
+        Add to Cart
+      </button>
     </div>
 
-    <div class="card">
-      <span class="heart">♥</span>
-      <img src="images/cake3.png">
-      <h3>Blushing Strawberry Cream</h3>
-      <div class="price">₹390</div>
-      <button class="order">ORDER THIS</button>
+    <!-- PASTRY -->
+    <div class="menu-card">
+      <img src="images/pastry.jpg">
+      <h4>Chocolate Pastry</h4>
+      <div class="menu-price">₹50</div>
+      <div class="qty-box">
+        <button>-</button><span>1</span><button>+</button>
+      </div>
+      <button class="menu-add" data-name="Chocolate Pastry" data-price="50">
+        Add to Cart
+      </button>
     </div>
 
-    <div class="card">
-      <span class="heart">♥</span>
-      <img src="images/cake4.png">
-      <h3>Mystery Rose Choco</h3>
-      <div class="price">₹410</div>
-      <button class="order">ORDER THIS</button>
+    <!-- SNACK -->
+    <div class="menu-card">
+      <img src="images/burger.jpg">
+      <h4>Veg Burger</h4>
+      <div class="menu-price">₹40</div>
+      <div class="qty-box">
+        <button>-</button><span>1</span><button>+</button>
+      </div>
+      <button class="menu-add" data-name="Veg Burger" data-price="40">
+        Add to Cart
+      </button>
     </div>
+
   </div>
 </section>
 
-<!-- CONTACT SECTION -->
-<section style="background:#fff7ec;">
+ 
+
+<!-- CONTACT & MAP -->
+<section>
   <h2>Visit Cakesman Bakery</h2>
   <p class="sub">Freshly baked happiness, ready for you every day.</p>
-
   <div style="max-width:800px;margin:40px auto;text-align:center;font-size:15px;line-height:1.8;color:#555;">
     <p><strong>📍 Address:</strong> Cakesman Bakery, Your City Name</p>
     <p><strong>📞 Phone:</strong> +91 98765 43210</p>
@@ -354,31 +377,271 @@ button:hover {
     <p style="margin-top:18px;color:#777;">We use premium ingredients, maintain strict hygiene standards, and bake fresh every day to make your celebrations special.</p>
   </div>
 
-  <div style="max-width:900px;margin:auto;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.15);">
-    <iframe src="https://www.google.com/maps?q=india&output=embed" width="100%" height="320" style="border:0;"></iframe>
+  <!-- MAP -->
+  <div class="map-container" style="position:relative;max-width:900px;margin:auto;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.15);">
+    <iframe id="map-frame" src="https://www.google.com/maps?q=india&output=embed" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <div id="map-dark-overlay" style="position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity 0.4s;"></div>
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer style="background:#2b1b1b;color:#f3e6da;padding:40px 20px;text-align:center;">
-  <h3 style="font-size:22px;margin-bottom:10px;">Cakesman Bakery</h3>
-  <p style="max-width:520px;margin:0 auto 16px;font-size:14px;color:#e0cfc1;">
-    Baking smiles with love, care, and premium ingredients. Trusted by hundreds of happy customers for quality, taste, and hygiene.
-  </p>
-  <p style="font-size:13px;color:#cdb9aa;">© 2026 Cakesman Bakery • Freshly Baked Every Day</p>
-</footer>
-  <footer class="lux-footer">
+                                                                <div style="margin-top:30px;">
+                                                                 <h3>Scan Menu</h3>
+                                                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://yourwebsite.com"
+                                                                  style="border-radius:12px;background:#fff;padding:10px">
+                                                                 <p style="font-size:13px;margin-top:8px;">Scan to view menu & order instantly</p>
+                                                                </div>
+
+<footer>
   <h3>Cakesman Bakery</h3>
-  <p>
-    Baking smiles with premium ingredients, strict hygiene,
-    and fresh love every day. Trusted by hundreds of happy customers.
-  </p>
-  <p class="small">© 2026 Cakesman Bakery • Freshly Baked Daily</p>
+  <p>Baking smiles with love, care, and premium ingredients. Trusted by hundreds of happy customers for quality, taste, and hygiene.</p>
+  <p>© 2026 Cakesman Bakery • Freshly Baked Every Day</p>
 </footer>
 
-<!-- Floating Call & WhatsApp -->
-<a href="tel:+919876543210" class="float-btn call">📞</a>
-<a href="https://wa.me/919876543210" class="float-btn whatsapp">💬</a>
+
+<script>
+// SCROLL FADE-IN
+const sections = document.querySelectorAll('.hero, section, footer');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.style.opacity = 1;
+      entry.target.style.transform = 'translateY(0)';
+    }
+  });
+},{threshold:0.15});
+sections.forEach(sec => observer.observe(sec));
+
+// DARK MODE TOGGLE
+const darkToggleBtn = document.getElementById('dark-toggle');
+const mapOverlay = document.getElementById('map-dark-overlay');
+darkToggleBtn.addEventListener('click', ()=>{
+  document.body.classList.toggle('dark');
+  mapOverlay.style.opacity = document.body.classList.contains('dark') ? 0.5 : 0;
+});
+
+// BUTTON RIPPLE EFFECT
+document.querySelectorAll('.btn, .order').forEach(btn=>{
+  btn.addEventListener('click', function(e){
+    const circle=document.createElement('span');
+    circle.classList.add('ripple');
+    const rect=this.getBoundingClientRect();
+    circle.style.left=(e.clientX-rect.left)+'px';
+    circle.style.top=(e.clientY-rect.top)+'px';
+    this.appendChild(circle);
+    setTimeout(()=>circle.remove(),600);
+  });
+});
+
+// HERO & MASCOT PARALLAX
+document.addEventListener('mousemove', e=>{
+  const heroImg = document.querySelector('.hero-img');
+  const mascot = document.querySelector('.mascot');
+  const x = (window.innerWidth/2 - e.clientX)/50;
+  const y = (window.innerHeight/2 - e.clientY)/50;
+  heroImg.style.transform = `translateX(${x}px) translateY(${y}px)`;
+  mascot.style.transform = `translateX(${-x}px) translateY(${-y}px)`;
+});
+window.addEventListener('scroll', ()=>{
+  const scrollY = window.scrollY;
+  const heroImg = document.querySelector('.hero-img');
+  const mascot = document.querySelector('.mascot');
+  heroImg.style.transform += ` translateY(${scrollY * 0.05}px)`;
+  mascot.style.bottom = 120 + scrollY*0.02 + 'px';
+});
+
+// CART FUNCTIONALITY
+let cart = [];
+const cartSidebar = document.getElementById('cart-sidebar');
+const cartIcon = document.getElementById('cart-icon');
+const cartItemsDiv = document.getElementById('cart-items');
+const cartCount = document.getElementById('cart-count');
+const cartTotalSpan = document.getElementById('cart-total');
+
+function renderCart() {
+  cartItemsDiv.innerHTML = '';
+  let total = 0;
+  cart.forEach((item,index)=>{
+    total += item.price*item.qty;
+    const div = document.createElement('div');
+    div.style.marginBottom='10px';
+    div.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span>${item.name}</span>
+        <span>₹${item.price*item.qty}</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:flex-end;margin-top:4px;">
+        <button data-index="${index}" class="dec-btn" style="padding:2px 6px;margin-right:4px;">-</button>
+        <span>${item.qty}</span>
+        <button data-index="${index}" class="inc-btn" style="padding:2px 6px;margin-left:4px;">+</button>
+      </div>
+      <hr style="margin:6px 0;">
+    `;
+    cartItemsDiv.appendChild(div);
+  });
+  cartCount.textContent = cart.length;
+  cartTotalSpan.textContent = total;
+  attachQtyListeners();
+}
+
+function attachQtyListeners() {
+  document.querySelectorAll('.inc-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const index = btn.dataset.index;
+      cart[index].qty++;
+      renderCart();
+    });
+  });
+  document.querySelectorAll('.dec-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const index = btn.dataset.index;
+      if(cart[index].qty>1) cart[index].qty--;
+      else cart.splice(index,1);
+      renderCart();
+    });
+  });
+}
+
+document.querySelectorAll('.order').forEach((btn,index)=>{
+  btn.addEventListener('click', ()=>{
+    const card = btn.closest('.card');
+    const productName = card.querySelector('h3').innerText;
+    const price = parseInt(card.querySelector('.price').innerText.replace(/₹/,''));
+    const existing = cart.find(item=>item.name===productName);
+    if(existing) existing.qty++;
+    else cart.push({name:productName,qty:1,price:price});
+    renderCart();
+    cartSidebar.style.right='0';
+    cartIcon.style.animation = 'cart-pulse 0.5s ease';
+    cartIcon.addEventListener('animationend', ()=>{cartIcon.style.animation='';},{once:true});
+  });
+});
+
+cartIcon.addEventListener('click', ()=>{
+  cartSidebar.style.right = cartSidebar.style.right==='0px' ? '-320px' : '0';
+});
+
+document.getElementById('checkout-btn').addEventListener('click', ()=>{
+  if(cart.length===0){
+    alert("Cart is empty!");
+    return;
+  }
+
+  let msg = `Hello Cakesman Bakery 👋\n\nI want to order:\n`;
+  let total = 0;
+
+  cart.forEach(item=>{
+    msg += `• ${item.name}\n  Quantity: ${item.qty}\n  Price: ₹${item.price * item.qty}\n\n`;
+    total += item.price * item.qty;
+  });
+
+  msg += `Total Amount: ₹${total}\n\nPlease confirm availability 🙏`;
+
+  window.open(
+    "https://wa.me/919876543210?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
+});
+
+// MENU ADD TO CART WITH QTY
+document.querySelectorAll('.menu-card').forEach(card=>{
+  let qty = 1;
+  const minus = card.querySelector('.qty-box button:first-child');
+  const plus = card.querySelector('.qty-box button:last-child');
+  const qtyText = card.querySelector('.qty-box span');
+  const addBtn = card.querySelector('.menu-add');
+
+  minus.onclick = ()=>{ if(qty>1){qty--;qtyText.textContent=qty;} };
+  plus.onclick = ()=>{ qty++; qtyText.textContent=qty; };
+
+  addBtn.onclick = ()=>{
+    const name = addBtn.dataset.name;
+    const price = parseInt(addBtn.dataset.price);
+    const existing = cart.find(i=>i.name===name);
+    if(existing) existing.qty += qty;
+    else cart.push({name,price,qty});
+    renderCart();
+    cartSidebar.style.right='0';
+    qty=1; qtyText.textContent=1;
+  };
+});
+document.getElementById("mobile-wa").onclick = ()=>{
+  document.getElementById("checkout-btn").click();
+};
+// ================= ADMIN HANDLE =================
+const ADMIN_PIN = "1234"; // change this
+
+document.getElementById('admin-btn').onclick = ()=>{
+  document.getElementById('admin-panel').style.display='block';
+};
+
+document.getElementById('admin-login').onclick = ()=>{
+  const pin = document.getElementById('admin-pin').value;
+  if(pin === ADMIN_PIN){
+    document.getElementById('admin-actions').style.display='block';
+    alert("Admin access granted");
+  }else{
+    alert("Wrong PIN");
+  }
+};
+
+
+</script>
+<div id="mobile-order-bar">
+  <div onclick="cartSidebar.style.right='0'">🛒 View Cart</div>
+  <div id="mobile-wa">💬 Order on WhatsApp</div>
+</div>
+<!-- ADMIN HANDLE (HIDDEN) -->
+<button id="admin-btn"
+style="
+position:fixed;
+bottom:20px;
+right:20px;
+width:50px;
+height:50px;
+border-radius:50%;
+border:none;
+background:#000;
+color:#fff;
+font-size:20px;
+cursor:pointer;
+z-index:20000;
+opacity:0.2;
+pointer-events:auto;
+">
+⚙️
+</button>
+<!-- ADMIN PANEL -->
+<div id="admin-panel"
+style="
+display:none;
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#fff;
+padding:20px;
+width:300px;
+border-radius:12px;
+box-shadow:0 20px 60px rgba(0,0,0,.4);
+z-index:10000;
+">
+<h3 style="margin-bottom:10px;">Admin Panel</h3>
+<input id="admin-pin" type="password" placeholder="Enter Admin PIN"
+style="width:100%;padding:8px;margin-bottom:10px;">
+<button id="admin-login"
+style="width:100%;padding:8px;background:#e63946;color:#fff;border:none;border-radius:6px;">
+Login
+</button>
+
+<div id="admin-actions" style="display:none;margin-top:15px;">
+  <button onclick="alert(JSON.stringify(cart,null,2))"
+  style="width:100%;margin-bottom:8px;">📦 View Orders</button>
+
+  <button onclick="cart=[];renderCart();alert('Cart cleared')"
+  style="width:100%;">🗑 Clear Cart</button>
+</div>
+</div>
 
 </body>
 </html>
