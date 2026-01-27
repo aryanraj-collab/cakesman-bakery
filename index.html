@@ -723,6 +723,11 @@ html, body{
   opacity: 1;
   transform: none;
 }
+section {
+  opacity: 1;
+  transform: none;
+}
+
 
 
 </style>
@@ -1089,17 +1094,26 @@ html, body{
 
 <script>
 // SCROLL FADE-IN
-const sections = document.querySelectorAll('.hero, section:not(.menu-poster):not(.menu-section), footer'
+// SAFE SCROLL FADE (only for sections that WANT animation)
+const animatedSections = document.querySelectorAll(
+  '.hero, section.animate, footer'
+);
 
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.style.opacity = 1;
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-},{threshold:0.15});
-sections.forEach(sec => observer.observe(sec));
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+
+animatedSections.forEach(sec => observer.observe(sec));
+
 
 // DARK MODE TOGGLE
 const darkToggleBtn = document.getElementById('dark-toggle');
