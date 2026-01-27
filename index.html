@@ -64,6 +64,14 @@ body.dark .btn.light:hover{background:#d4af37;color:#121212;}
 body.dark .btn.primary,body.dark .order{background:#d4af37;color:#121212;}
 body.dark .btn.primary:hover,body.dark .order:hover{background:#b89525;}
 
+    #cart-sidebar {
+  z-index: 9999;
+}
+#cart-close-btn {
+  z-index: 10000;
+  position: relative;
+}
+
 /* FIXED GLASS EFFECT BUTTONS */
 .btn.glass{
   background: rgba(255,255,255,0.15);
@@ -1525,16 +1533,1567 @@ document.querySelectorAll(".menu-card").forEach(card=>{
     cartSidebar.style.right="0";
   });
 });
-const cartCloseBtn = document.getElementById('cart-close-btn');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cakesman Bakery</title>
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+/* GLOBAL */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins', Arial, sans-serif;}
+body{background:#fff;color:#2b1b1b;overflow-x:hidden;transition:background 0.5s,color 0.5s;}
+body.dark{background:#121212;color:#f3e6da;}
+a{cursor:pointer;text-decoration:none;position:relative;}
 
-cartIcon.addEventListener('click', () => {
-  cartSidebar.style.right =
-    cartSidebar.style.right === '0px' ? '-320px' : '0';
+/* HEADER */
+header{background:#fdebd3;padding:22px 60px;display:flex;align-items:center;justify-content:space-between;position:relative;transition: background 0.4s;}
+body.dark header{background:#1e1e1e;}
+header h1{font-size:36px;color:#e63946;font-weight:700;letter-spacing:1px;}
+.tilt{display:inline-block;transform:rotate(-12deg) translateY(-4px);color:#c1121f;}
+nav a{margin:0 14px;font-size:16px;color:#333;transition:color 0.4s;}
+body.dark nav a{color:#f3e6da;}
+nav a:hover{color:#e63946;}
+nav a i{margin-right:6px;}
+
+/* HERO */
+.hero{background:#fdebd3;padding:70px 60px 120px;display:flex;align-items:center;justify-content:space-between;position:relative;opacity:1;transform:none;transition: all 0.8s ease-out;perspective:1000px;overflow:hidden;}
+body.dark .hero{background:#1c1c1c;}
+.hero-text{max-width:480px;}
+.hero-text h2{font-size:42px;margin-bottom:18px;}
+.hero-text p{font-size:15px;color:#555;margin-bottom:28px;}
+body.dark .hero-text p{color:#d3d3d3;}
+.hero-img{width:460px;transition:transform 0.2s ease-out;will-change:transform;}
+.hero-img img{width:100%;transform:translateZ(0);transition: transform 0.2s ease-out;}
+
+/* HERO BOTTOM CURVE */
+.hero::after{
+    content:'';
+    position:absolute;
+    bottom:-1px;
+    left:0;
+    width:100%;
+    height:120px;
+    background:white;
+    pointer-events: none;
+    border-top-left-radius:100% 40px;
+    border-top-right-radius:100% 40px;
+    transition: background 0.4s;
+}
+body.dark .hero::after{
+    background:#121212;
+}
+
+/* BUTTONS */
+.btn, .order{position:relative;overflow:hidden;border:none;padding:12px 26px;border-radius:30px;font-size:14px;cursor:pointer;display:inline-block;transition: all 0.3s ease;}
+.btn.light{border:2px solid #e63946;color:#e63946;background:none;}
+.btn.light:hover{background:#e63946;color:#fff;transform:scale(1.05);}
+.btn.primary{background:#e63946;color:#fff;}
+.btn.primary:hover{background:#c1121f;transform:scale(1.05);}
+.order{background:#e63946;color:#fff;border-radius:22px;animation:pulse 2s infinite;}
+.order:hover{background:#c1121f;transform:scale(1.05);}
+body.dark .btn.light{border:2px solid #d4af37;color:#d4af37;}
+body.dark .btn.light:hover{background:#d4af37;color:#121212;}
+body.dark .btn.primary,body.dark .order{background:#d4af37;color:#121212;}
+body.dark .btn.primary:hover,body.dark .order:hover{background:#b89525;}
+
+    #cart-sidebar {
+  z-index: 9999;
+}
+#cart-close-btn {
+  z-index: 10000;
+  position: relative;
+}
+
+/* FIXED GLASS EFFECT BUTTONS */
+.btn.glass{
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #e63946;  /* visible in light mode */
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn.glass:hover{
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.25);
+  color: #c1121f;
+}
+
+body.dark .btn.glass{
+  background: rgba(212,175,55,0.15);
+  border: 1px solid rgba(212,175,55,0.4);
+  color: #fff; /* visible in dark mode */
+}
+
+body.dark .btn.glass:hover{
+  background: rgba(212,175,55,0.25);
+  color: #121212;
+}
+
+/* BUTTON RIPPLE EFFECT */
+.btn span.ripple, .order span.ripple{position:absolute;border-radius:50%;transform:scale(0);animation:ripple 0.6s linear;background: rgba(255,255,255,0.7);}
+body.dark .btn span.ripple,body.dark .order span.ripple{background: rgba(0,0,0,0.4);}
+@keyframes ripple{to{transform:scale(4);opacity:0;}}
+
+/* CART PULSE */
+@keyframes cart-pulse{0%{transform: scale(1);}25%{transform: scale(1.2);}50%{transform: scale(1);}75%{transform: scale(1.2);}100%{transform: scale(1);}}
+
+/* SPECIALS */
+section{padding:90px 70px;background:#fff;opacity:1;transform:none;transition: all 0.8s ease-out;}
+body.dark section{background:#1c1c1c;}
+section h2{text-align:center;font-size:32px;margin-bottom:10px;}
+section p.sub{text-align:center;color:#777;margin-bottom:50px;}
+body.dark section p.sub{color:#d3d3d3;}
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;}
+.card{background:#fff;border-radius:22px;padding:24px 20px 28px;text-align:center;box-shadow:0 18px 40px rgba(0,0,0,0.10);position:relative;transition:all 0.4s ease;cursor:pointer;}
+body.dark .card{background:#1e1e1e;}
+.card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 30px 70px rgba(0,0,0,0.18);}
+.card img{width:100%;height:180px;object-fit:contain;margin-bottom:12px;transition:transform 0.4s ease;}
+.card:hover img{transform:scale(1.08);}
+.heart{position:absolute;top:15px;right:15px;color:#e63946;font-size:18px;}
+
+/* MASCOT */
+.mascot{position:fixed;bottom:120px;left:20px;font-size:48px;animation:float 3s ease-in-out infinite;z-index:999;cursor:pointer;transition: transform 0.3s, bottom 0.3s;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+
+/* DARK MODE TOGGLE */
+
+#dark-toggle{position:fixed;top:80px;right:20px;width:50px;height:50px;border-radius:50%;border:none;background:#111;color:#fff;font-size:24px;z-index:10000;cursor:pointer;box-shadow:0 5px 20px rgba(0,0,0,0.3);transition: transform 0.3s;}
+#dark-toggle:hover{transform:scale(1.1);}
+
+/* FOOTER */
+footer{background:#2b1b1b;color:#f3e6da;padding:40px 20px;text-align:center;transition:background 0.5s,color 0.5s;opacity:0;transform:translateY(30px);}
+body.dark footer{background:#121212;color:#f3e6da;}
+footer p{max-width:520px;margin:0 auto 16px;font-size:14px;color:#e0cfc1;}
+
+/* RESPONSIVE */
+@media(max-width:900px){header{flex-direction:column;}.hero{flex-direction:column;text-align:center;}.hero-img img{width:90%;margin-top:40px;}}
+/* ================= PREMIUM MENU ================= */
+.menu-section{
+  padding:90px 70px;
+  background:linear-gradient(135deg,#fff7ec,#fdebd3);
+}
+body.dark .menu-section{
+  background:linear-gradient(135deg,#121212,#1c1c1c);
+}
+
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+}
+
+.menu-card{
+  background:rgba(255,255,255,0.85);
+  border-radius:22px;
+  padding:18px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 50px rgba(0,0,0,0.15);
+  transition:all .4s ease;
+  position:relative;
+}
+body.dark .menu-card{
+  background:rgba(30,30,30,0.9);
+}
+
+.menu-card:hover{
+  transform:translateY(-12px) scale(1.03);
+  box-shadow:0 35px 80px rgba(212,175,55,.35);
+}
+
+.menu-card img{
+  width:100%;
+  height:auto;        /* makes the height adjust to the width */
+  max-height:280px;   /* optional, sets a limit for very tall images */
+  object-fit:cover;   /* makes sure the image fills the box nicely */
+  border-radius:16px;
+  margin-bottom:12px;
+  transition:transform 0.4s ease;
+}
+
+.menu-card h4{
+  font-size:17px;
+  margin-bottom:6px;
+}
+
+.menu-price{
+  font-weight:700;
+  color:#e63946;
+  margin-bottom:8px;
+}
+body.dark .menu-price{
+  color:#d4af37;
+}
+
+.qty-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+.qty-box button{
+  width:28px;
+  height:28px;
+  border:none;
+  border-radius:50%;
+  background:#e63946;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
+body.dark .qty-box button{
+  background:#d4af37;
+  color:#121212;
+}
+
+.menu-add{
+  width:100%;
+  padding:10px;
+  border-radius:20px;
+  border:none;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(135deg,#e63946,#c1121f);
+  color:#fff;
+}
+body.dark .menu-add{
+  background:linear-gradient(135deg,#d4af37,#b89525);
+  color:#121212;
+}
+.menu-add:hover{
+  transform:scale(1.05);
+}
+#mobile-order-bar{
+  display:none;
+}
+@media(max-width:768px){
+  #mobile-order-bar{
+    display:flex;
+    position:fixed;
+    bottom:0;
+    left:0;
+    width:100%;
+    background:#fff;
+    box-shadow:0 -10px 30px rgba(0,0,0,.2);
+    z-index:9999;
+  }
+  body.dark #mobile-order-bar{
+    background:#121212;
+  }
+  #mobile-order-bar div{
+    flex:1;
+    padding:14px;
+    text-align:center;
+    font-weight:700;
+    cursor:pointer;
+  }
+  #mobile-wa{
+    background:#25D366;
+    color:#fff;
+  }
+}
+.why-us{
+  padding:70px 60px;
+  background:transparent; /* REMOVE BIG WHITE BOX */
+}
+
+
+body.dark .why-us{
+  background:transparent;
+}
+
+
+.why-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:30px;
+  max-width:1100px;
+  margin:auto;
+}
+
+.why-card{
+  background:rgba(255,255,255,0.9);
+  padding:30px 20px;
+  border-radius:20px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(0,0,0,0.1);
+  transition:transform .4s, box-shadow .4s;
+}
+body.dark .why-card{
+  background:#1e1e1e;
+}
+
+.why-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 30px 70px rgba(212,175,55,0.35);
+}
+
+.why-card i{
+  font-size:34px;
+  color:#e63946;
+  margin-bottom:12px;
+}
+body.dark .why-card i{
+  color:#d4af37;
+}
+.best-sellers{
+  padding:60px 40px;
+  background:linear-gradient(135deg,#fdebd3,#fff);
+  text-align:center;
+}
+body.dark .best-sellers{
+  background:linear-gradient(135deg,#1c1c1c,#121212);
+}
+
+.best-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:18px;
+  margin-top:30px;
+}
+
+.best-item{
+  padding:14px 22px;
+  border-radius:30px;
+  background:#fff;
+  box-shadow:0 10px 25px rgba(0,0,0,0.12);
+  font-weight:600;
+}
+body.dark .best-item{
+  background:#1e1e1e;
+}
+.trust-strip{
+  padding:70px 40px;
+  background:#fff;
+}
+body.dark .trust-strip{
+  background:#121212;
+}
+
+.trust-stats{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:30px;
+  max-width:900px;
+  margin:40px auto 0;
+  text-align:center;
+}
+
+.trust-stats strong{
+  font-size:36px;
+  color:#e63946;
+  display:block;
+}
+body.dark .trust-stats strong{
+  color:#d4af37;
+}
+.admin-btn{
+  position: relative;
+  z-index: 9999;
+  pointer-events: auto;
+}
+.hero-text{
+  position: relative;
+  z-index: 5;
+}
+.admin-btn{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 99999;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+#admin-btn{
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+
+  /* FORCE ABOVE EVERYTHING */
+  z-index: 2147483647;
+
+  /* FORCE CLICK */
+  pointer-events: auto !important;
+}
+
+/* PREVENT OTHER FIXED ELEMENTS FROM BLOCKING */
+.hero::after,
+.mascot,
+#map-dark-overlay{
+  pointer-events: none;
+}
+.menu-poster{
+  padding:80px 40px;
+  text-align:center;
+  background:linear-gradient(135deg,#fff7ec,#fdebd3);
+}
+
+body.dark .menu-poster{
+  background:linear-gradient(135deg,#1c1c1c,#121212);
+}
+
+.poster-wrapper{
+  max-width:900px;
+  margin:30px auto 0;
+}
+
+.poster-wrapper img{
+  width:100%;
+  height:auto;
+  border-radius:22px;
+  box-shadow:0 25px 60px rgba(0,0,0,0.2);
+}
+
+
+/* ================= MENU POSTER – FINAL MOBILE FIX ================= */
+
+/* Remove section animation & padding ONLY for menu poster */
+.menu-poster{
+  padding:80px 40px;
+  background:linear-gradient(135deg,#fff7ec,#fdebd3);
+  opacity:1 !important;
+  transform:none !important;
+}
+
+body.dark .menu-poster{
+  background:linear-gradient(135deg,#1c1c1c,#121212);
+}
+
+.poster-wrapper{
+  max-width:900px;
+  margin:30px auto 0;
+}
+
+.poster-wrapper img{
+  width:100%;
+  height:auto;
+  border-radius:22px;
+  display:block;
+}
+
+/* 📱 MOBILE */
+@media (max-width:768px){
+
+  .menu-poster{
+    width:100vw;
+    padding:24px 12px !important;
+   
+  }
+
+  .menu-poster h2{
+    font-size:22px;
+  }
+
+  .menu-poster .sub{
+    font-size:13px;
+    margin-bottom:14px;
+  }
+
+  .poster-wrapper{
+    max-width:100%;
+    margin:0;
+  }
+
+  .poster-wrapper img{
+    width:100vw;
+    max-width:100vw;
+    border-radius:0;
+    box-shadow:none;
+  }
+}
+
+/* prevent horizontal scroll */
+html, body{
+  overflow-x:hidden;
+}
+/* ====== FINAL MOBILE FIX – MENU CARD ====== */
+
+@media (max-width: 768px) {
+
+  /* BREAK THE CARD CONSTRAINT */
+  .menu-card{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
+   
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  /* IMAGE GOES FULL WIDTH */
+  .menu-card img{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    display: block;
+    border-radius: 0 !important;
+  }
+}
+
+/* STOP HORIZONTAL SCROLL */
+html, body{
+  overflow-x: hidden;
+}
+/* ===== FINAL MOBILE FIX — MENU GRID ===== */
+
+@media (max-width: 768px){
+
+  /* BREAK GRID CONSTRAINT */
+  .menu-grid{
+    display: block !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* FULL WIDTH CARD */
+  .menu-card{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    overflow: visible !important;
+  }
+
+  /* FULL WIDTH IMAGE */
+  .menu-card img{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    display: block;
+    border-radius: 0 !important;
+  }
+}
+
+/* NO HORIZONTAL SCROLL */
+html, body{
+  overflow-x: hidden;
+}
+/* ===== ULTIMATE MOBILE FIX — MENU SELECTION ===== */
+
+@media (max-width: 768px){
+
+  /* BREAK SECTION CONSTRAINT */
+  .menu-selection{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
+    
+    overflow: visible !important;
+  }
+
+  /* DISABLE GRID ON MOBILE */
+  .menu-selection .menu-grid{
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* FULL WIDTH CARD */
+  .menu-selection .menu-card{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* FULL WIDTH IMAGE */
+  .menu-selection .menu-card img{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    height: auto !important;
+    display: block;
+    border-radius: 0 !important;
+  }
+}
+
+
+/* CART PANEL / DRAWER ONLY */
+.cart-panel,
+.cart-drawer,
+.cart-modal{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  max-width: 400px;
+  height: 100vh;
+  background: #ffffff;
+  color: #000000;
+  z-index: 10000;
+  overflow-y: auto;
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* CART CONTENT */
+.cart-panel *,
+.cart-drawer *,
+.cart-modal *{
+  color: #000000;
+  opacity: 1;
+  visibility: visible;
+}
+
+
+/* ===== FINAL FIX FOR CART SIDEBAR ===== */
+
+.cart-sidebar{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 90vw;
+  max-width: 380px;
+  height: 100vh;
+  background: #ffffff;
+  color: #000000;
+  z-index: 10001;
+  overflow-y: auto;
+
+  /* FORCE VISIBILITY */
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  /* MAKE SURE IT IS ON-SCREEN */
+  transform: translateX(0) !important;
+}
+
+/* CART CONTENT */
+.cart-sidebar *{
+  color: #000000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+
+/* ===== FIX MENU VISIBILITY ===== */
+.menu-section,
+.menu-selection,
+.menu-grid,
+.menu-card,
+.menu-card img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+/* ===== VISIBILITY HOTFIX ===== */
+.menu-selection,
+.menu-grid,
+.menu-card {
+  position: relative !important;
+  height: auto !important;
+  min-height: unset !important;
+  overflow: visible !important;
+}
+
+.menu-card img {
+  display: block !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+/* ===== ABSOLUTE VISIBILITY FIX FOR MENU ===== */
+.menu-selection,
+.menu-selection * {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: auto !important;
+}
+
+.menu-grid {
+  display: grid !important;
+}
+
+.menu-card {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+.menu-card img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+}
+/* menu must be visible immediately */
+.menu-section {
+  opacity: 1;
+  transform: none;
+}
+section {
+  opacity: 1;
+  transform: none;
+}
+/* FIX MOBILE IMAGE ALIGNMENT */
+@media (max-width: 768px) {
+
+  .menu-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .menu-card img {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    border-radius: 16px !important;
+  }
+
+}
+/* FIX MAP WIDTH ON MOBILE */
+@media (max-width: 768px) {
+
+  .map-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 20px auto !important;
+  }
+
+  .map-container iframe {
+    width: 100% !important;
+    height: 260px !important;
+  }
+
+}
+/* ================= MOBILE SPACING POLISH ================= */
+@media (max-width: 768px) {
+
+  /* Global section spacing */
+  section {
+    padding: 48px 16px !important;
+  }
+
+  /* Headings */
+  section h2 {
+    font-size: 22px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+
+  section .sub {
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+
+  /* Menu cards spacing */
+  .menu-card {
+    margin-bottom: 20px;
+  }
+
+  /* Buttons touch friendly */
+  button,
+  .menu-add {
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  /* Hero spacing */
+  .hero {
+    padding: 50px 16px 80px;
+  }
+
+  .hero-text h2 {
+    font-size: 26px;
+  }
+
+  .hero-text p {
+    font-size: 14px;
+  }
+}
+/* ================= SMART DARK MODE ================= */
+body.dark {
+
+  /* softer text */
+  color: #e6e6e6;
+}
+
+body.dark section {
+  background: #161616;
+}
+
+body.dark h1,
+body.dark h2,
+body.dark h3 {
+  color: #f5f5f5;
+}
+
+body.dark .sub {
+  color: #bcbcbc;
+}
+
+/* Cards */
+body.dark .menu-card,
+body.dark .why-card,
+body.dark .best-item {
+  background: #1f1f1f;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+}
+
+/* Prices pop */
+body.dark .menu-price {
+  color: #ffd166;
+}
+
+/* Map overlay only in dark */
+body.dark #map-dark-overlay {
+  opacity: 0.45;
+}
+/* ================= IMAGE OPTIMIZATION ================= */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Menu images only */
+.menu-card img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #f4f4f4;
+}
+
+body.dark .menu-card img {
+  background: #2a2a2a;
+}
+/* ===== HARD MOBILE EDGE FIX ===== */
+@media (max-width: 768px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .menu-section,
+  .menu-poster,
+  .map-section,
+  .hero,
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box;
+  }
+
+}
+@media (max-width: 768px) {
+
+  .menu-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+}
+@media (max-width: 768px) {
+
+  .menu-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto 20px !important;
+    overflow: hidden;
+  }
+
+  .menu-card img {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block;
+    border-radius: 16px;
+  }
+
+}
+/* MOBILE NAV FIX */
+@media (max-width: 768px) {
+  header nav {
+    display: flex;
+    flex-direction: column;  /* vertical stack */
+    gap: 12px;               /* spacing between buttons */
+    margin-top: 16px;
+    align-items: center;
+  }
+
+  header nav a {
+    font-size: 16px;          /* slightly bigger for touch */
+    padding: 10px 20px;       /* make them easier to tap */
+    border-radius: 12px;
+    background: #fdebd3;      /* nice button look */
+    color: #e63946;
+    width: 90%;                /* full-ish width */
+    text-align: center;
+  }
+
+  body.dark header nav a {
+    background: #1e1e1e;
+    color: #d4af37;
+  }
+
+  header nav a:hover {
+    background: #e63946;
+    color: #fff;
+  }
+}
+
+
+
+</style>
+</head>
+<body>
+<div id="cart-backdrop" style="
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  z-index:9998;
+  display:none;
+"></div>
+
+<header>
+  <h1>Cakesm<span class="tilt">a</span>n Bakery</h1>
+  <nav>
+    <a href="#"><i class="fas fa-home"></i> Home</a>
+    <a href="#"><i class="fas fa-birthday-cake"></i> Cupcake</a>
+    <a href="#"><i class="fas fa-book"></i> Recipes</a>
+    <a href="#"><i class="fas fa-blog"></i> Blog</a>
+    <a href="#"><i class="fas fa-shopping-cart"></i> Order Online</a>
+    <a href="#"><i class="fas fa-phone"></i> Contact</a>
+  </nav>
+</header>
+
+<!-- CART ICON -->
+<div id="cart-icon" style="position:fixed;top:20px;right:20px;width:50px;height:50px;background:#e63946;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;z-index:10000;box-shadow:0 5px 15px rgba(0,0,0,0.3);">🛒<span id="cart-count" style="position:absolute;top:-6px;right:-6px;background:#fff;color:#e63946;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;">0</span></div>
+
+<!-- DARK MODE TOGGLE BELOW CART ICON -->
+<button id="dark-toggle">🌙</button>
+
+<!-- MASCOT -->
+<div class="mascot">🐻🍰</div>
+
+<!-- CART SIDEBAR -->
+<div id="cart-sidebar" style="position:fixed;top:0;right:-320px;height:100vh;width:300px;background:#fff;box-shadow:-5px 0 30px rgba(0,0,0,0.2);padding:20px;overflow-y:auto;transition:right 0.4s;z-index:10000;">
+ 
+
+  <!-- EXIT BUTTON -->
+  <button id="cart-close-btn" style="position:absolute;top:10px;right:10px;padding:4px 10px;border:none;border-radius:6px;background:#e63946;color:#fff;font-weight:700;cursor:pointer;">✕</button>
+
+  <h3>Your Cart</h3>
+  <div id="cart-items"></div>
+  <div style="margin-top:10px;font-weight:700;">Total: ₹<span id="cart-total">0</span></div>
+
+  <!-- CHECKOUT BUTTON -->
+  <button id="checkout-btn" style="width:100%;padding:10px;margin-top:15px;border:none;border-radius:8px;background:#25D366;color:#fff;font-weight:700;cursor:pointer;">
+    Checkout via WhatsApp
+  </button>
+</div>
+
+
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-text">
+    <h2>Yummy sweeties delivered<br>to your dining table!</h2>
+    <p>Freshly baked cakes and cupcakes crafted with love for every celebration.</p>
+    <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <a class="btn glass">Read More</a>
+      <a class="btn primary glass">Order Now</a>
+    </div>
+  </div>
+  <section class="why-us">
+  <div class="why-grid">
+    <div class="why-card">
+      <i class="fas fa-award"></i>
+      <h4>Premium Quality</h4>
+      <p>Only the finest ingredients, baked fresh every day.</p>
+    </div>
+    <div class="why-card">
+      <i class="fas fa-heart"></i>
+      <h4>Made With Love</h4>
+      <p>Every cake is handcrafted with passion and care.</p>
+    </div>
+    <div class="why-card">
+      <i class="fas fa-truck"></i>
+      <h4>Fast Delivery</h4>
+      <p>On-time doorstep delivery for every celebration.</p>
+    </div>
+    <div class="why-card">
+      <i class="fas fa-star"></i>
+      <h4>Trusted Brand</h4>
+      <p>Loved by hundreds of happy customers.</p>
+    </div>
+  </div>
+</section>
+
+  <div class="hero-img">
+    
+  </div>
+</div>
+
+<!-- SPECIALS -->
+<section>
+  <section class="best-sellers">
+  <h2>Customer Favorites</h2>
+  <p class="sub">Our most loved bakery delights</p>
+
+  <div class="best-grid">
+    <div class="best-item">🎂 Chocolate Truffle Cake</div>
+    <div class="best-item">🍰 Fresh Fruit Cake</div>
+    <div class="best-item">🍩 Fresh Cream Doughnuts</div>
+    <div class="best-item">🥐 Butter Croissants</div>
+
+  </div>
+</section>
+
+  <h2>This Week’s Specials</h2>
+  <section class="menu-section">
+  <h2>Our Premium Menu</h2>
+  <p class="sub">Handcrafted delights with premium ingredients</p>
+  <div class="menu-filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="cake">Cakes</button>
+    <button class="filter-btn" data-filter="pastry">Pastry</button>
+    <button class="filter-btn" data-filter="snack">Snacks</button>
+  </div>
+
+  <div class="menu-grid">
+
+    <!-- Vanilla Cake -->
+    <div class="menu-card" data-name="Vanilla" data-half="250" data-full="500">
+      <img src="vanila-cake.jpg" alt="Vanilla Cake" loading="lazy">
+      <h4>Vanilla Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹250</option>
+        <option value="full">1 KG – ₹500</option>
+      </select>
+      <div class="menu-price">₹250</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Pineapple Cake -->
+    <div class="menu-card" data-name="Pineapple" data-half="280" data-full="550">
+      <img src="pineapple-cake.jpg" alt="Pineapple Cake" loading="lazy">
+      <h4>Pineapple Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹280</option>
+        <option value="full">1 KG – ₹550</option>
+      </select>
+      <div class="menu-price">₹280</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Butter Scotch Cake -->
+    <div class="menu-card" data-name="Butter Scotch" data-half="285" data-full="570">
+      <img src="butter-scotch-cake.jpg" alt="Butter Scotch Cake" loading="lazy">
+      <h4>Butter Scotch Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹285</option>
+        <option value="full">1 KG – ₹570</option>
+      </select>
+      <div class="menu-price">₹285</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- White Forest Cake -->
+    <div class="menu-card" data-name="White Forest" data-half="285" data-full="570">
+      <img src="white-forest-cake.jpg" alt="White Forest Cake" loading="lazy">
+      <h4>White Forest Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹285</option>
+        <option value="full">1 KG – ₹570</option>
+      </select>
+      <div class="menu-price">₹285</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Black Forest Cake -->
+    <div class="menu-card" data-name="Black Forest" data-half="285" data-full="570">
+      <img src="black-forest-cake.jpg" alt="Black Forest Cake" loading="lazy">
+      <h4>Black Forest Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹285</option>
+        <option value="full">1 KG – ₹570</option>
+      </select>
+      <div class="menu-price">₹285</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Black Currant Cake -->
+    <div class="menu-card" data-name="Black Currant" data-half="350" data-full="650">
+      <img src="black-currant-cake.jpg" alt="Black Currant Cake" loading="lazy">
+      <h4>Black Currant Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹350</option>
+        <option value="full">1 KG – ₹650</option>
+      </select>
+      <div class="menu-price">₹350</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Choco Chip Cake -->
+    <div class="menu-card" data-name="Choco Chip" data-half="350" data-full="650">
+      <img src="choco-chip-cake.jpg" alt="Choco Chip Cake" loading="lazy">
+      <h4>Choco Chip Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹350</option>
+        <option value="full">1 KG – ₹650</option>
+      </select>
+      <div class="menu-price">₹350</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Brownie Cake -->
+    <div class="menu-card" data-name="Brownie" data-half="320" data-full="640">
+      <img src="brownie-cake.jpg" alt="Brownie Cake" loading="lazy">
+      <h4>Brownie Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹320</option>
+        <option value="full">1 KG – ₹640</option>
+      </select>
+      <div class="menu-price">₹320</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Mix Fruit Cake -->
+    <div class="menu-card" data-name="Mix Fruit" data-half="350" data-full="650">
+      <img src="mix-fruit-cake.jpg" alt="Mix Fruit Cake" loading="lazy">
+      <h4>Mix Fruit Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹350</option>
+        <option value="full">1 KG – ₹650</option>
+      </select>
+      <div class="menu-price">₹350</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Fresh Fruit Cake -->
+    <div class="menu-card" data-name="Fresh Fruit" data-half="400" data-full="700">
+      <img src="fresh-fruit-cake.jpg" alt="Fresh Fruit Cake" loading="lazy">
+      <h4>Fresh Fruit Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹400</option>
+        <option value="full">1 KG – ₹700</option>
+      </select>
+      <div class="menu-price">₹400</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Red Velvet Cake -->
+    <div class="menu-card" data-name="Red Velvet" data-half="400" data-full="800">
+      <img src="red-velvet-cake.jpg" alt="Red Velvet Cake" loading="lazy">
+      <h4>Red Velvet Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹400</option>
+        <option value="full">1 KG – ₹800</option>
+      </select>
+      <div class="menu-price">₹400</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Blue Berry Cake -->
+    <div class="menu-card" data-name="Blue Berry" data-half="350" data-full="650">
+      <img src="blue-berry-cake.jpg" alt="Blue Berry Cake" loading="lazy">
+      <h4>Blue Berry Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹350</option>
+        <option value="full">1 KG – ₹650</option>
+      </select>
+      <div class="menu-price">₹350</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Strawberry Cake -->
+    <div class="menu-card" data-name="Strawberry" data-half="280" data-full="550">
+      <img src="strawberry-cake.jpg" alt="Strawberry Cake" loading="lazy">
+      <h4>Strawberry Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹280</option>
+        <option value="full">1 KG – ₹550</option>
+      </select>
+      <div class="menu-price">₹280</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Doll Cake -->
+    <div class="menu-card" data-name="Doll Cake" data-half="400" data-full="700">
+      <img src="doll-cake.jpg" alt="Doll Cake" loading="lazy">
+      <h4>Doll Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹400</option>
+        <option value="full">1 KG – ₹700</option>
+      </select>
+      <div class="menu-price">₹400</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- KitKat Cake -->
+    <div class="menu-card" data-name="KitKat Cake" data-half="480" data-full="850">
+      <img src="kitkat-cake.jpg" alt="KitKat Cake" loading="lazy">
+      <h4>KitKat Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹480</option>
+        <option value="full">1 KG – ₹850</option>
+      </select>
+      <div class="menu-price">₹480</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Choco Coffee Cake -->
+    <div class="menu-card" data-name="Choco Coffee" data-half="400" data-full="700">
+      <img src="choco-coffee-cake.jpg" alt="Choco Coffee Cake" loading="lazy">
+      <h4>Choco Coffee Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹400</option>
+        <option value="full">1 KG – ₹700</option>
+      </select>
+      <div class="menu-price">₹400</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+    <!-- Choco Truffle Cake -->
+    <div class="menu-card" data-name="Choco Truffle" data-half="450" data-full="850">
+      <img src="choco-truffle-cake.jpg" alt="Choco Truffle Cake" loading="lazy">
+      <h4>Choco Truffle Cake</h4>
+      <select class="weight-select">
+        <option value="half">Half KG – ₹450</option>
+        <option value="full">1 KG – ₹850</option>
+      </select>
+      <div class="menu-price">₹450</div>
+      <button class="menu-add">Add to Cart</button>
+    </div>
+
+  </div>
+</section>
+<section class="menu-poster">
+  <h2>Pastry & Snacks Menu</h2>
+  <p class="sub">Quick bites & sweet treats</p>
+
+  <div class="poster-wrapper">
+    <img src="images/pastry-snacks-menu.jpg" alt="Pastry and Snacks Menu">
+  </div>
+</section>
+
+ 
+
+<!-- CONTACT & MAP -->
+<section>
+  <h2>Visit Cakesman Bakery</h2>
+  <p class="sub">Freshly baked happiness, ready for you every day.</p>
+  <div style="max-width:800px;margin:40px auto;text-align:center;font-size:15px;line-height:1.8;color:#555;">
+    <p><strong>📍 Address:</strong> Cakesman Bakery, Your City Name</p>
+    <p><strong>📞 Phone:</strong> +91 98765 43210</p>
+    <p><strong>🕒 Timings:</strong> 9:00 AM – 10:00 PM (All Days)</p>
+    <p style="margin-top:18px;color:#777;">We use premium ingredients, maintain strict hygiene standards, and bake fresh every day to make your celebrations special.</p>
+  </div>
+
+  <!-- MAP -->
+  <div class="map-container" style="position:relative;max-width:900px;margin:auto;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,0.15);">
+    <iframe id="map-frame" src="https://www.google.com/maps?q=india&output=embed" width="100%" height="320" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <div id="map-dark-overlay" style="position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;transition:opacity 0.4s;"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+                                                                <div style="margin-top:30px;">
+                                                                 <h3>Scan Menu</h3>
+                                                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://yourwebsite.com"
+                                                                  style="border-radius:12px;background:#fff;padding:10px">
+                                                                 <p style="font-size:13px;margin-top:8px;">Scan to view menu & order instantly</p>
+                                                                </div>
+
+                                                                <section class="trust-strip">
+  <h2>Why Customers Love Us</h2>
+  <p class="sub">Serving smiles, one bite at a time</p>
+
+  <div class="trust-stats">
+    <div><strong>500+</strong><span>Happy Customers</span></div>
+    <div><strong>50+</strong><span>Daily Orders</span></div>
+    <div><strong>5★</strong><span>Customer Rating</span></div>
+    <div><strong>8+</strong><span>Years Experience</span></div>
+  </div>
+</section>
+
+<footer>
+  <h3>Cakesman Bakery</h3>
+  <p>Baking smiles with love, care, and premium ingredients. Trusted by hundreds of happy customers for quality, taste, and hygiene.</p>
+  <p>© 2026 Cakesman Bakery • Freshly Baked Every Day</p>
+</footer>
+
+
+<script>
+// SCROLL FADE-IN
+// SAFE SCROLL FADE (only for sections that WANT animation)
+const animatedSections = document.querySelectorAll(
+  '.hero, section.animate, footer'
+);
+
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  { threshold: 0.15 }
+);
+
+animatedSections.forEach(sec => observer.observe(sec));
+
+
+// DARK MODE TOGGLE
+const darkToggleBtn = document.getElementById('dark-toggle');
+const mapOverlay = document.getElementById('map-dark-overlay');
+darkToggleBtn.addEventListener('click', ()=>{
+  document.body.classList.toggle('dark');
+  mapOverlay.style.opacity = document.body.classList.contains('dark') ? 0.5 : 0;
 });
 
-cartCloseBtn.addEventListener('click', () => {
-  cartSidebar.style.right = '-320px';
+// BUTTON RIPPLE EFFECT
+document.querySelectorAll('.btn, .order').forEach(btn=>{
+  btn.addEventListener('click', function(e){
+    const circle=document.createElement('span');
+    circle.classList.add('ripple');
+    const rect=this.getBoundingClientRect();
+    circle.style.left=(e.clientX-rect.left)+'px';
+    circle.style.top=(e.clientY-rect.top)+'px';
+    this.appendChild(circle);
+    setTimeout(()=>circle.remove(),600);
+  });
 });
+
+// HERO & MASCOT PARALLAX
+document.addEventListener('mousemove', e=>{
+  const heroImg = document.querySelector('.hero-img');
+  const mascot = document.querySelector('.mascot');
+  const x = (window.innerWidth/2 - e.clientX)/50;
+  const y = (window.innerHeight/2 - e.clientY)/50;
+  heroImg.style.transform = `translateX(${x}px) translateY(${y}px)`;
+  mascot.style.transform = `translateX(${-x}px) translateY(${-y}px)`;
+});
+window.addEventListener('scroll', ()=>{
+  const scrollY = window.scrollY;
+  const heroImg = document.querySelector('.hero-img');
+  const mascot = document.querySelector('.mascot');
+  heroImg.style.transform += ` translateY(${scrollY * 0.05}px)`;
+  mascot.style.bottom = 120 + scrollY*0.02 + 'px';
+});
+
+// CART FUNCTIONALITY
+let cart = [];
+const cartSidebar = document.getElementById('cart-sidebar');
+const cartIcon = document.getElementById('cart-icon');
+const cartItemsDiv = document.getElementById('cart-items');
+const cartCount = document.getElementById('cart-count');
+const cartTotalSpan = document.getElementById('cart-total');
+
+function renderCart() {
+  cartItemsDiv.innerHTML = '';
+  let total = 0;
+  cart.forEach((item,index)=>{
+    total += item.price*item.qty;
+    const div = document.createElement('div');
+    div.style.marginBottom='10px';
+    div.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span>${item.name}</span>
+        <span>₹${item.price*item.qty}</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:flex-end;margin-top:4px;">
+        <button data-index="${index}" class="dec-btn" style="padding:2px 6px;margin-right:4px;">-</button>
+        <span>${item.qty}</span>
+        <button data-index="${index}" class="inc-btn" style="padding:2px 6px;margin-left:4px;">+</button>
+      </div>
+      <hr style="margin:6px 0;">
+    `;
+    cartItemsDiv.appendChild(div);
+  });
+  cartCount.textContent = cart.length;
+  cartTotalSpan.textContent = total;
+  attachQtyListeners();
+}
+
+function attachQtyListeners() {
+  document.querySelectorAll('.inc-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const index = btn.dataset.index;
+      cart[index].qty++;
+      renderCart();
+    });
+  });
+  document.querySelectorAll('.dec-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const index = btn.dataset.index;
+      if(cart[index].qty>1) cart[index].qty--;
+      else cart.splice(index,1);
+      renderCart();
+    });
+  });
+}
+
+document.querySelectorAll('.order').forEach((btn,index)=>{
+  btn.addEventListener('click', ()=>{
+    const card = btn.closest('.card');
+    const productName = card.querySelector('h3').innerText;
+    const price = parseInt(card.querySelector('.price').innerText.replace(/₹/,''));
+    const existing = cart.find(item=>item.name===productName);
+    if(existing) existing.qty++;
+    else cart.push({name:productName,qty:1,price:price});
+    renderCart();
+    cartSidebar.style.right='0';
+    cartIcon.style.animation = 'cart-pulse 0.5s ease';
+    cartIcon.addEventListener('animationend', ()=>{cartIcon.style.animation='';},{once:true});
+  });
+});
+
+cartIcon.addEventListener('click', ()=>{
+  cartSidebar.style.right = cartSidebar.style.right==='0px' ? '-320px' : '0';
+});
+
+document.getElementById('checkout-btn').addEventListener('click', ()=>{
+  if(cart.length===0){
+    alert("Cart is empty!");
+    return;
+  }
+
+  let msg = `Hello Cakesman Bakery 👋\n\nI want to order:\n`;
+  let total = 0;
+
+  cart.forEach(item=>{
+    msg += `• ${item.name}\n  Quantity: ${item.qty}\n  Price: ₹${item.price * item.qty}\n\n`;
+    total += item.price * item.qty;
+  });
+
+  msg += `Total Amount: ₹${total}\n\nPlease confirm availability 🙏`;
+
+  window.open(
+    "https://wa.me/919876543210?text=" + encodeURIComponent(msg),
+    "_blank"
+  );
+});
+
+document.querySelectorAll(".menu-card").forEach(card => {
+  const select = card.querySelector(".weight-select");
+  const priceBox = card.querySelector(".menu-price");
+  const addBtn = card.querySelector(".menu-add");
+
+  // Set initial price
+  let currentPrice = parseInt(card.dataset.half);
+  priceBox.textContent = `₹${currentPrice}`;
+
+  // When user changes weight
+  select.addEventListener("change", () => {
+    const weight = select.value; // "half" or "full"
+    currentPrice = parseInt(card.dataset[weight]);
+    priceBox.textContent = `₹${currentPrice}`;
+  });
+
+  // When user clicks "Add to Cart"
+  addBtn.addEventListener("click", () => {
+    const productName = card.dataset.name + " (" + select.options[select.selectedIndex].text.split('–')[0].trim() + ")";
+    const existing = cart.find(item => item.name === productName);
+
+    if (existing) existing.qty++;
+    else cart.push({ name: productName, qty: 1, price: currentPrice });
+
+    renderCart();
+
+    // Open the cart sidebar
+    cartSidebar.style.right = "0";
+    cartIcon.style.animation = "cart-pulse 0.5s ease";
+    cartIcon.addEventListener("animationend", () => {
+      cartIcon.style.animation = "";
+    }, { once: true });
+  });
+});
+
+
+
+document.getElementById("mobile-wa").onclick = ()=>{
+  document.getElementById("checkout-btn").click();
+};
+
+document.querySelectorAll(".menu-card").forEach(card=>{
+  const select = card.querySelector(".weight-select");
+  const priceBox = card.querySelector(".menu-price");
+  const addBtn = card.querySelector(".menu-add");
+
+  select.addEventListener("change", ()=>{
+    const price = select.value === "half"
+      ? card.dataset.half
+      : card.dataset.full;
+    priceBox.textContent = "₹" + price;
+  });
+
+  addBtn.addEventListener("click", ()=>{
+    const weight = select.value === "half" ? "Half KG" : "1 KG";
+    const price = parseInt(select.value === "half"
+      ? card.dataset.half
+      : card.dataset.full);
+
+    const name = `${card.dataset.name} (${weight})`;
+    const existing = cart.find(i=>i.name===name);
+
+    if(existing) existing.qty++;
+    else cart.push({name, price, qty:1});
+
+    renderCart();
+    cartSidebar.style.right="0";
+  });
+});
+const cartCloseBtn = document.getElementById("cart-close-btn");
+
+cartCloseBtn.onclick = function () {
+  cartSidebar.style.right = "-320px";
+};
+cartIcon.onclick = function () {
+  cartSidebar.style.right = "0";
+};
+
+
+
+
+
+
+
+</script>
+<div id="mobile-order-bar">
+  <div onclick="cartSidebar.style.right='0'">🛒 View Cart</div>
+  <div id="mobile-wa">💬 Order on WhatsApp</div>
+</div>
+
+
+
+
+</body>
+</html>
 
 
 
