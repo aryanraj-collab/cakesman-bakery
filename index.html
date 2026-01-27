@@ -170,7 +170,7 @@ body.dark .menu-card{
 
 .menu-card img{
   width:100%;
-  height:180px;        /* makes the height adjust to the width */
+  height:auto;        /* makes the height adjust to the width */
   max-height:280px;   /* optional, sets a limit for very tall images */
   object-fit:cover;   /* makes sure the image fills the box nicely */
   border-radius:16px;
@@ -1154,6 +1154,12 @@ body.dark .float-btn {
     width: 40vw;       /* cart takes 40% of the screen */
     max-width: 200px;  /* optional, keeps it from being too wide */
   }
+}
+.menu-card img {
+  width: 100%;
+  height: 180px;          /* SAME height as cake */
+  object-fit: cover;     /* THIS prevents stretching */
+  border-radius: 12px;
 }
 
 
