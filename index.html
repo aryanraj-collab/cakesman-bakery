@@ -1770,6 +1770,36 @@ cartCloseBtn.addEventListener('click', () => {
   cartSidebar.style.right = '-320px';
 });
 
+// ===== SWIPE TO CLOSE CART ON MOBILE =====
+let startX = 0;
+let currentX = 0;
+let isSwiping = false;
+
+cartSidebar.addEventListener('touchstart', (e) => {
+  if (window.innerWidth <= 768) { // only for mobile
+    startX = e.touches[0].clientX;
+    isSwiping = true;
+  }
+});
+
+cartSidebar.addEventListener('touchmove', (e) => {
+  if (!isSwiping) return;
+  currentX = e.touches[0].clientX;
+  const deltaX = currentX - startX;
+  if (deltaX < 0) { // swiping left
+    cartSidebar.style.transform = `translateX(${deltaX}px)`;
+  }
+});
+
+cartSidebar.addEventListener('touchend', () => {
+  if (!isSwiping) return;
+  const deltaX = currentX - startX;
+  if (deltaX < -50) { // swipe threshold
+    cartSidebar.style.right = '-320px';
+  }
+  cartSidebar.style.transform = 'translateX(0)';
+  isSwiping = false;
+});
 
 
 
