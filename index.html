@@ -932,21 +932,6 @@ body.dark .menu-card img {
     color: #fff;
   }
 }
-#cart-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 9999; /* behind the cartSidebar */
-  display: none;
-}
-
-#cart-sidebar {
-  z-index: 10000;
-}
-
-#dark-toggle, #cart-icon {
-  z-index: 11000; /* always on top so you can click them */
-}
 
 
 
@@ -1583,41 +1568,9 @@ cartIcon.addEventListener('click', () => {
 cartCloseBtn.addEventListener('click', () => {
   cartSidebar.style.right = '-320px';
 });
-const cartBackdrop = document.getElementById('cart-backdrop');
 
-// Function to open cart
-function openCart() {
-  cartSidebar.style.right = '0';
-  cartBackdrop.style.display = 'block';
-}
 
-// Function to close cart
-function closeCart() {
-  cartSidebar.style.right = '-320px';
-  cartBackdrop.style.display = 'none';
-}
 
-// Cart icon click opens cart
-cartIcon.addEventListener('click', openCart);
-
-// Exit button closes cart
-cartCloseBtn.addEventListener('click', closeCart);
-
-// Clicking outside (backdrop) also closes cart
-cartBackdrop.addEventListener('click', closeCart);
-function openCart() {
-  cartSidebar.style.right = '0';
-  cartBackdrop.style.display = 'block';
-}
-
-function closeCart() {
-  cartSidebar.style.right = '-320px';
-  cartBackdrop.style.display = 'none';
-}
-
-cartIcon.addEventListener('click', openCart);
-cartCloseBtn.addEventListener('click', closeCart);
-cartBackdrop.addEventListener('click', closeCart);
 
 
 
