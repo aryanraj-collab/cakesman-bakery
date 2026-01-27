@@ -13,6 +13,9 @@
 body{background:#fff;color:#2b1b1b;overflow-x:hidden;transition:background 0.5s,color 0.5s;}
 body.dark{background:#121212;color:#f3e6da;}
 a{cursor:pointer;text-decoration:none;position:relative;}
+html {
+  scroll-behavior: smooth;
+}
 
 /* HEADER */
 header{background:#fdebd3;padding:22px 60px;display:flex;align-items:center;justify-content:space-between;position:relative;transition: background 0.4s;}
@@ -1173,7 +1176,7 @@ body.dark .float-btn {
     <a href="#"><i class="fas fa-birthday-cake"></i> Cupcake</a>
     <a href="#"><i class="fas fa-book"></i> Recipes</a>
     <a href="#"><i class="fas fa-blog"></i> Blog</a>
-    <a href="#"><i class="fas fa-shopping-cart"></i> Order Online</a>
+    <a href="#menu-section" class="nav-link">Order Online</a>
     <a href="#"><i class="fas fa-phone"></i> Contact</a>
   </nav>
 </header>
@@ -1262,7 +1265,7 @@ body.dark .float-btn {
 </section>
 
   <h2>This Week’s Specials</h2>
-  <section class="menu-section">
+  <section class="menu-section" id="menu-section">
   <h2>Our Premium Menu</h2>
   <p class="sub">Handcrafted delights with premium ingredients</p>
   <div class="menu-filters">
