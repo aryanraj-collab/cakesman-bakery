@@ -1878,6 +1878,107 @@ cartCloseBtn.addEventListener('click', () => {
   cartSidebar.style.right = '-320px';
 });
 
+// ===== CART SETUP =====
+let cart = [];
+
+// Update cart display
+function updateCartDisplay() {
+  const cartItems = document.getElementById('cart-items');
+  const cartTotal = document.getElementById('cart-total');
+  const cartCount = document.getElementById('cart-count');
+
+  cartItems.innerHTML = '';
+  let total = 0;
+  cart.forEach((item, index) => {
+    total += item.price * item.quantity;
+    const div = document.createElement('div');
+    div.style.marginBottom = '8px';
+    div.innerHTML = `
+      ${item.name} - ₹${item.price} x ${item.quantity}
+      <button style="margin-left:8px;" data-index="${index}">Remove</button>
+    `;
+    cartItems.appendChild(div);
+
+    // Remove button
+    div.querySelector('button').addEventListener('click', e => {
+      const idx = e.target.dataset.index;
+      cart.splice(idx, 1);
+      updateCartDisplay();
+    });
+  });
+  cartTotal.textContent = total;
+  cartCount.textContent = cart.length;
+}
+
+// ===== HANDLE MENU CARDS =====
+document.querySelectorAll('.menu-card').forEach(card => {
+  const select = card.querySelector('.weight-select');
+  const priceDiv = card.querySelector('.menu-price');
+  const addBtn = card.querySelector('.menu-add');
+  const name = card.querySelector('h4').textContent;
+
+  // If cake: get half/full price from data attributes
+  const isCake = card.dataset.half && card.dataset.full;
+
+  // Update price dynamically when select changes
+  if (select) {
+    select.addEventListener('change', () => {
+      if (isCake) {
+        const weight = select.value; // half or full
+        const price = card.dataset[weight];
+        priceDiv.textContent = `₹${price}`;
+      } else {
+        // For pastries/snacks, price is in the option text
+        const optionText = select.options[select.selectedIndex].text; // e.g., "1 Pc – ₹50"
+        const priceMatch = optionText.match(/₹(\d+)/);
+        if (priceMatch) priceDiv.textContent = `₹${priceMatch[1]}`;
+      }
+    });
+  }
+
+  // Add to cart
+  addBtn.addEventListener('click', () => {
+    let price = parseInt(priceDiv.textContent.replace('₹', ''), 10);
+    cart.push({ name, price, quantity: 1 });
+    updateCartDisplay();
+    alert(`${name} added to cart!`);
+  });
+});
+
+// ===== CART TOGGLE =====
+const cartSidebar = document.getElementById('cart-sidebar');
+const cartIcon = document.getElementById('cart-icon');
+const cartCloseBtn = document.getElementById('cart-close-btn');
+const cartBackdrop = document.getElementById('cart-backdrop');
+
+cartIcon.addEventListener('click', () => {
+  cartSidebar.style.right = '0';
+  cartBackdrop.style.display = 'block';
+});
+cartCloseBtn.addEventListener('click', () => {
+  cartSidebar.style.right = '-320px';
+  cartBackdrop.style.display = 'none';
+});
+cartBackdrop.addEventListener('click', () => {
+  cartSidebar.style.right = '-320px';
+  cartBackdrop.style.display = 'none';
+});
+
+// ===== CHECKOUT BUTTON =====
+document.getElementById('checkout-btn').addEventListener('click', () => {
+  if (cart.length === 0) {
+    alert('Cart is empty!');
+    return;
+  }
+  let message = 'Hello! I want to order:\n';
+  cart.forEach(item => {
+    message += `${item.name} x${item.quantity} = ₹${item.price * item.quantity}\n`;
+  });
+  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  message += `Total: ₹${total}`;
+  const waLink = `https://wa.me/918808140339?text=${encodeURIComponent(message)}`;
+  window.open(waLink, '_blank');
+});
 
    
  
