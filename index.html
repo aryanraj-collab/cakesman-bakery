@@ -631,6 +631,43 @@ html, body{
   background: rgba(0,0,0,0.4);
   z-index: 9999;
 }
+/* ===== FINAL FIX FOR CART SIDEBAR ===== */
+
+.cart-sidebar{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 90vw;
+  max-width: 380px;
+  height: 100vh;
+  background: #ffffff;
+  color: #000000;
+  z-index: 10001;
+  overflow-y: auto;
+
+  /* FORCE VISIBILITY */
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  /* MAKE SURE IT IS ON-SCREEN */
+  transform: translateX(0) !important;
+}
+
+/* CART CONTENT */
+.cart-sidebar *{
+  color: #000000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* OPTIONAL BACKDROP (if you use one) */
+.cart-overlay,
+.cart-backdrop{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 10000;
+}
 
 
 </style>
