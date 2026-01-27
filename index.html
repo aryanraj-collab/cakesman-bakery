@@ -718,6 +718,11 @@ html, body{
   width: 100% !important;
   height: auto !important;
 }
+/* menu must be visible immediately */
+.menu-section {
+  opacity: 1;
+  transform: none;
+}
 
 
 </style>
@@ -1084,7 +1089,7 @@ html, body{
 
 <script>
 // SCROLL FADE-IN
-const sections = document.querySelectorAll('.hero, section:not(.menu-poster), footer');
+const sections = document.querySelectorAll('.hero, section:not(.menu-poster):not(.menu-section), footer'
 
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach(entry=>{
