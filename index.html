@@ -1780,67 +1780,7 @@ cartCloseBtn.addEventListener('click', () => {
 
 </script>
 
-<script>
-const cartSidebar = document.getElementById('cart-sidebar');
 
-if (window.innerWidth <= 768) {
-  let startX = 0;
-  let currentX = 0;
-  let isDragging = false;
-  let sidebarWidth = cartSidebar.offsetWidth;
-
-  cartSidebar.style.transition = 'transform 0.3s ease';
-  cartSidebar.style.transform = 'translateX(100%)'; // initially hidden
-
-  // function to open cart
-  function openCart() {
-    cartSidebar.style.transform = 'translateX(0)';
-  }
-
-  // function to close cart
-  function closeCart() {
-    cartSidebar.style.transform = 'translateX(100%)';
-  }
-
-  // Exit button still works
-  document.getElementById('cart-close-btn').addEventListener('click', closeCart);
-
-  // Start touch
-  cartSidebar.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    cartSidebar.style.transition = 'none';
-  });
-
-  // Move touch
-  cartSidebar.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    currentX = e.touches[0].clientX;
-    let deltaX = currentX - startX;
-    if (deltaX < 0) { // dragging left
-      cartSidebar.style.transform = `translateX(${Math.min(-deltaX, sidebarWidth)}px)`;
-    }
-  });
-
-  // End touch
-  cartSidebar.addEventListener('touchend', () => {
-    isDragging = false;
-    cartSidebar.style.transition = 'transform 0.3s ease';
-    let deltaX = currentX - startX;
-
-    if (deltaX < -80) {
-      // swiped enough to close
-      closeCart();
-    } else {
-      // snap back open
-      openCart();
-    }
-
-    startX = 0;
-    currentX = 0;
-  });
-}
-</script>
 
 <div id="mobile-order-bar">
   <div onclick="cartSidebar.style.right='0'">🛒 View Cart</div>
