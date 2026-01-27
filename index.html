@@ -693,6 +693,31 @@ html, body{
   max-width: 100% !important;
   height: auto !important;
 }
+/* ===== ABSOLUTE VISIBILITY FIX FOR MENU ===== */
+.menu-selection,
+.menu-selection * {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  pointer-events: auto !important;
+}
+
+.menu-grid {
+  display: grid !important;
+}
+
+.menu-card {
+  position: relative !important;
+  z-index: 10 !important;
+}
+
+.menu-card img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+}
 
 
 </style>
