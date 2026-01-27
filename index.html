@@ -1550,58 +1550,9 @@ document.querySelectorAll(".menu-card").forEach(card=>{
   <div onclick="cartSidebar.style.right='0'">🛒 View Cart</div>
   <div id="mobile-wa">💬 Order on WhatsApp</div>
 </div>
-<!-- ADMIN HANDLE (HIDDEN) -->
-<button id="admin-btn"
-style="
-position:fixed;
-bottom:20px;
-right:20px;
-width:50px;
-height:50px;
-border-radius:50%;
-border:none;
-background:#000;
-color:#fff;
-font-size:20px;
-cursor:pointer;
-z-index:20000;
-opacity:0.2;
-pointer-events:auto;
-">
-⚙️
-</button>
-<!-- ADMIN PANEL -->
-<div id="admin-panel"
-style="
-display:none;
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:#fff;
-padding:20px;
-width:300px;
-border-radius:12px;
-box-shadow:0 20px 60px rgba(0,0,0,.4);
-z-index:10000;
-">
-<h3 style="margin-bottom:10px;">Admin Panel</h3>
-<input id="admin-pin" type="password" placeholder="Enter Admin PIN"
-style="width:100%;padding:8px;margin-bottom:10px;">
-<button id="admin-login"
-style="width:100%;padding:8px;background:#e63946;color:#fff;border:none;border-radius:6px;">
-Login
-</button>
 
-<div id="admin-actions" style="display:none;margin-top:15px;">
-  <button onclick="alert(JSON.stringify(cart,null,2))"
-  style="width:100%;margin-bottom:8px;">📦 View Orders</button>
 
-  <button onclick="cart=[];renderCart();alert('Cart cleared')"
-  style="width:100%;">🗑 Clear Cart</button>
-</div>
-</div>
-<button id="admin-btn">⚙️</button>
+
 
 </body>
 </html>
