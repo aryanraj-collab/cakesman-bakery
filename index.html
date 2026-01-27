@@ -1491,94 +1491,6 @@ body.dark .float-btn {
   <div class="poster-wrapper">
     <img src="images/pastry-snacks-menu.jpg" alt="Pastry and Snacks Menu">
   </div>
-  <!-- Pastries & Snacks Menu -->
-<section class="menu-section" id="pastry-snack-section">
-  <h2>Pastry & Snacks Menu</h2>
-  <p class="sub">Quick bites & sweet treats</p>
-
-  <div class="menu-filters">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="pastry">Pastry</button>
-    <button class="filter-btn" data-filter="snack">Snacks</button>
-  </div>
-
-  <div class="menu-grid">
-
-    <!-- Butter Croissant -->
-    <div class="menu-card" data-name="Butter Croissant" data-type="snack">
-      <img src="butter-croissant.jpg" alt="Butter Croissant">
-      <h4>Butter Croissant</h4>
-      <select class="weight-select">
-        <option value="single">1 Pc – ₹50</option>
-        <option value="double">2 Pc – ₹90</option>
-      </select>
-      <div class="menu-price">₹50</div>
-      <button class="menu-add">Add to Cart</button>
-    </div>
-
-    <!-- Chocolate Eclair -->
-    <div class="menu-card" data-name="Chocolate Eclair" data-type="pastry">
-      <img src="chocolate-eclair.jpg" alt="Chocolate Eclair">
-      <h4>Chocolate Eclair</h4>
-      <select class="weight-select">
-        <option value="single">1 Pc – ₹60</option>
-        <option value="double">2 Pc – ₹110</option>
-      </select>
-      <div class="menu-price">₹60</div>
-      <button class="menu-add">Add to Cart</button>
-    </div>
-
-    <!-- Strawberry Tart -->
-    <div class="menu-card" data-name="Strawberry Tart" data-type="pastry">
-      <img src="strawberry-tart.jpg" alt="Strawberry Tart">
-      <h4>Strawberry Tart</h4>
-      <select class="weight-select">
-        <option value="single">1 Pc – ₹70</option>
-        <option value="double">2 Pc – ₹130</option>
-      </select>
-      <div class="menu-price">₹70</div>
-      <button class="menu-add">Add to Cart</button>
-    </div>
-
-    <!-- Fresh Cream Doughnut -->
-    <div class="menu-card" data-name="Fresh Cream Doughnut" data-type="snack">
-      <img src="fresh-cream-doughnut.jpg" alt="Fresh Cream Doughnut">
-      <h4>Fresh Cream Doughnut</h4>
-      <select class="weight-select">
-        <option value="single">1 Pc – ₹40</option>
-        <option value="double">2 Pc – ₹75</option>
-      </select>
-      <div class="menu-price">₹40</div>
-      <button class="menu-add">Add to Cart</button>
-    </div>
-
-    <!-- Brownie Bite -->
-    <div class="menu-card" data-name="Brownie Bite" data-type="snack">
-      <img src="brownie-bite.jpg" alt="Brownie Bite">
-      <h4>Brownie Bite</h4>
-      <select class="weight-select">
-        <option value="single">1 Pc – ₹45</option>
-        <option value="double">2 Pc – ₹85</option>
-      </select>
-      <div class="menu-price">₹45</div>
-      <button class="menu-add">Add to Cart</button>
-    </div>
-
-    <!-- Almond Croissant -->
-    <div class="menu-card" data-name="Almond Croissant" data-type="pastry">
-      <img src="almond-croissant.jpg" alt="Almond Croissant">
-      <h4>Almond Croissant</h4>
-      <select class="weight-select">
-        <option value="single">1 Pc – ₹60</option>
-        <option value="double">2 Pc – ₹110</option>
-      </select>
-      <div class="menu-price">₹60</div>
-      <button class="menu-add">Add to Cart</button>
-    </div>
-
-  </div>
-</section>
-
 </section>
 
  
@@ -1791,47 +1703,40 @@ document.getElementById('checkout-btn').addEventListener('click', ()=>{
   );
 });
 
+document.querySelectorAll(".menu-card").forEach(card => {
+  const select = card.querySelector(".weight-select");
+  const priceBox = card.querySelector(".menu-price");
+  const addBtn = card.querySelector(".menu-add");
 
- document.querySelectorAll(".menu-add").forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    const card = e.target.closest(".menu-card");
-    const type = card.dataset.type;  // "cake", "pastry", "snack"
-    const name = card.dataset.name;
-    let price;
+  // Set initial price
+  let currentPrice = parseInt(card.dataset.half);
+  priceBox.textContent = `₹${currentPrice}`;
 
-    if (type === "cake") {
-      const weight = card.querySelector(".weight-select").value;
-      price = parseInt(card.dataset[weight]); // half/full price
-    } else {
-      price = parseInt(card.querySelector(".menu-price").innerText.replace('₹','')); 
-      // pastries/snacks: ignore weight
-    }
+  // When user changes weight
+  select.addEventListener("change", () => {
+    const weight = select.value; // "half" or "full"
+    currentPrice = parseInt(card.dataset[weight]);
+    priceBox.textContent = `₹${currentPrice}`;
+  });
 
-    addToCart({name, price, type});
+  // When user clicks "Add to Cart"
+  addBtn.addEventListener("click", () => {
+    const productName = card.dataset.name + " (" + select.options[select.selectedIndex].text.split('–')[0].trim() + ")";
+    const existing = cart.find(item => item.name === productName);
+
+    if (existing) existing.qty++;
+    else cart.push({ name: productName, qty: 1, price: currentPrice });
+
+    renderCart();
+
+    // Open the cart sidebar
+    cartSidebar.style.right = "0";
+    cartIcon.style.animation = "cart-pulse 0.5s ease";
+    cartIcon.addEventListener("animationend", () => {
+      cartIcon.style.animation = "";
+    }, { once: true });
   });
 });
-
-let cart = [];
-function addToCart(item){
-  cart.push(item);
-  updateCartUI();
-}
-
-function updateCartUI(){
-  const cartItems = document.getElementById("cart-items");
-  cartItems.innerHTML = "";
-  let total = 0;
-
-  cart.forEach(i => {
-    total += i.price;
-    const div = document.createElement("div");
-    div.textContent = `${i.name} - ₹${i.price}`;
-    cartItems.appendChild(div);
-  });
-
-  document.getElementById("cart-total").innerText = total;
-  document.getElementById("cart-count").innerText = cart.length;
-}
 
 
 
@@ -1878,107 +1783,6 @@ cartCloseBtn.addEventListener('click', () => {
   cartSidebar.style.right = '-320px';
 });
 
-// ===== CART SETUP =====
-let cart = [];
-
-// Update cart display
-function updateCartDisplay() {
-  const cartItems = document.getElementById('cart-items');
-  const cartTotal = document.getElementById('cart-total');
-  const cartCount = document.getElementById('cart-count');
-
-  cartItems.innerHTML = '';
-  let total = 0;
-  cart.forEach((item, index) => {
-    total += item.price * item.quantity;
-    const div = document.createElement('div');
-    div.style.marginBottom = '8px';
-    div.innerHTML = `
-      ${item.name} - ₹${item.price} x ${item.quantity}
-      <button style="margin-left:8px;" data-index="${index}">Remove</button>
-    `;
-    cartItems.appendChild(div);
-
-    // Remove button
-    div.querySelector('button').addEventListener('click', e => {
-      const idx = e.target.dataset.index;
-      cart.splice(idx, 1);
-      updateCartDisplay();
-    });
-  });
-  cartTotal.textContent = total;
-  cartCount.textContent = cart.length;
-}
-
-// ===== HANDLE MENU CARDS =====
-document.querySelectorAll('.menu-card').forEach(card => {
-  const select = card.querySelector('.weight-select');
-  const priceDiv = card.querySelector('.menu-price');
-  const addBtn = card.querySelector('.menu-add');
-  const name = card.querySelector('h4').textContent;
-
-  // If cake: get half/full price from data attributes
-  const isCake = card.dataset.half && card.dataset.full;
-
-  // Update price dynamically when select changes
-  if (select) {
-    select.addEventListener('change', () => {
-      if (isCake) {
-        const weight = select.value; // half or full
-        const price = card.dataset[weight];
-        priceDiv.textContent = `₹${price}`;
-      } else {
-        // For pastries/snacks, price is in the option text
-        const optionText = select.options[select.selectedIndex].text; // e.g., "1 Pc – ₹50"
-        const priceMatch = optionText.match(/₹(\d+)/);
-        if (priceMatch) priceDiv.textContent = `₹${priceMatch[1]}`;
-      }
-    });
-  }
-
-  // Add to cart
-  addBtn.addEventListener('click', () => {
-    let price = parseInt(priceDiv.textContent.replace('₹', ''), 10);
-    cart.push({ name, price, quantity: 1 });
-    updateCartDisplay();
-    alert(`${name} added to cart!`);
-  });
-});
-
-// ===== CART TOGGLE =====
-const cartSidebar = document.getElementById('cart-sidebar');
-const cartIcon = document.getElementById('cart-icon');
-const cartCloseBtn = document.getElementById('cart-close-btn');
-const cartBackdrop = document.getElementById('cart-backdrop');
-
-cartIcon.addEventListener('click', () => {
-  cartSidebar.style.right = '0';
-  cartBackdrop.style.display = 'block';
-});
-cartCloseBtn.addEventListener('click', () => {
-  cartSidebar.style.right = '-320px';
-  cartBackdrop.style.display = 'none';
-});
-cartBackdrop.addEventListener('click', () => {
-  cartSidebar.style.right = '-320px';
-  cartBackdrop.style.display = 'none';
-});
-
-// ===== CHECKOUT BUTTON =====
-document.getElementById('checkout-btn').addEventListener('click', () => {
-  if (cart.length === 0) {
-    alert('Cart is empty!');
-    return;
-  }
-  let message = 'Hello! I want to order:\n';
-  cart.forEach(item => {
-    message += `${item.name} x${item.quantity} = ₹${item.price * item.quantity}\n`;
-  });
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  message += `Total: ₹${total}`;
-  const waLink = `https://wa.me/918808140339?text=${encodeURIComponent(message)}`;
-  window.open(waLink, '_blank');
-});
 
    
  
