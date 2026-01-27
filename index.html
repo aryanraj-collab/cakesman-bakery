@@ -1800,6 +1800,69 @@ cartSidebar.addEventListener('touchend', () => {
   cartSidebar.style.transform = 'translateX(0)';
   isSwiping = false;
 });
+// ===== WORKING SWIPE TO CLOSE CART ON MOBILE =====
+if (window.innerWidth <= 768) {
+  let touchStartX = 0;
+  let touchEndX = 0;
+
+  cartSidebar.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  cartSidebar.addEventListener('touchmove', (e) => {
+    touchEndX = e.touches[0].clientX;
+    let deltaX = touchEndX - touchStartX;
+    if (deltaX < 0) { // swiping left
+      cartSidebar.style.right = `${-Math.min(320, Math.abs(deltaX))}px`;
+    }
+  });
+
+  cartSidebar.addEventListener('touchend', () => {
+    let deltaX = touchEndX - touchStartX;
+    if (deltaX < -80) { // swipe threshold
+      cartSidebar.style.right = '-320px'; // close cart
+    } else {
+      cartSidebar.style.right = '0'; // reset to open
+    }
+  });
+}
+// ===== MOBILE DRAGGABLE CART SIDEBAR =====
+if (window.innerWidth <= 768) {
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+
+  cartSidebar.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    cartSidebar.style.transition = 'none'; // disable smooth transition while dragging
+  });
+
+  cartSidebar.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+    let deltaX = currentX - startX;
+    if (deltaX < 0) { // only allow dragging left
+      cartSidebar.style.right = `${Math.min(320, -deltaX)}px`;
+    }
+  });
+
+  cartSidebar.addEventListener('touchend', () => {
+    isDragging = false;
+    cartSidebar.style.transition = 'right 0.3s ease'; // re-enable smooth transition
+
+    let deltaX = currentX - startX;
+    if (deltaX < -100) { // swipe threshold
+      cartSidebar.style.right = '-320px'; // close cart
+    } else {
+      cartSidebar.style.right = '0'; // snap back open
+    }
+
+    // reset coordinates
+    startX = 0;
+    currentX = 0;
+  });
+}
 
 
 
