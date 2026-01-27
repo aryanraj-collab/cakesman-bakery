@@ -857,6 +857,51 @@ img {
 body.dark .menu-card img {
   background: #2a2a2a;
 }
+/* ===== HARD MOBILE EDGE FIX ===== */
+@media (max-width: 768px) {
+
+  body {
+    overflow-x: hidden;
+  }
+
+  .menu-section,
+  .menu-poster,
+  .map-section,
+  .hero,
+  section {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    box-sizing: border-box;
+  }
+
+}
+@media (max-width: 768px) {
+
+  .menu-grid {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+  }
+
+}
+@media (max-width: 768px) {
+
+  .menu-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto 20px !important;
+    overflow: hidden;
+  }
+
+  .menu-card img {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: block;
+    border-radius: 16px;
+  }
+
+}
 
 
 
