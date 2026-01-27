@@ -1844,34 +1844,6 @@ document.getElementById("mobile-wa").onclick = ()=>{
   document.getElementById("checkout-btn").click();
 };
 
-document.querySelectorAll(".menu-card").forEach(card=>{
-  const select = card.querySelector(".weight-select");
-  const priceBox = card.querySelector(".menu-price");
-  const addBtn = card.querySelector(".menu-add");
-
-  select.addEventListener("change", ()=>{
-    const price = select.value === "half"
-      ? card.dataset.half
-      : card.dataset.full;
-    priceBox.textContent = "₹" + price;
-  });
-
-  addBtn.addEventListener("click", ()=>{
-    const weight = select.value === "half" ? "Half KG" : "1 KG";
-    const price = parseInt(select.value === "half"
-      ? card.dataset.half
-      : card.dataset.full);
-
-    const name = `${card.dataset.name} (${weight})`;
-    const existing = cart.find(i=>i.name===name);
-
-    if(existing) existing.qty++;
-    else cart.push({name, price, qty:1});
-
-    renderCart();
-    cartSidebar.style.right="0";
-  });
-});
 const cartCloseBtn = document.getElementById('cart-close-btn');
 
 cartIcon.addEventListener('click', () => {
