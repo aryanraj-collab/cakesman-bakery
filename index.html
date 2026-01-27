@@ -1112,6 +1112,27 @@ body.dark .float-btn {
     height: 160px;
   }
 }
+/* 🔒 FORCE ALL MENU IMAGES TO LOOK LIKE CAKES – FINAL OVERRIDE */
+.menu-section img,
+.menu-card img,
+.cards img {
+  width: 100% !important;
+  height: 180px !important;
+  min-height: 180px !important;
+  max-height: 180px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+}
+@media (max-width: 768px) {
+  .menu-section img,
+  .menu-card img,
+  .cards img {
+    height: 160px !important;
+    min-height: 160px !important;
+    max-height: 160px !important;
+  }
+}
 
 
 
