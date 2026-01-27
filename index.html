@@ -962,11 +962,20 @@ body.dark .menu-card img {
 
 <!-- CART SIDEBAR -->
 <div id="cart-sidebar" style="position:fixed;top:0;right:-320px;height:100vh;width:300px;background:#fff;box-shadow:-5px 0 30px rgba(0,0,0,0.2);padding:20px;overflow-y:auto;transition:right 0.4s;z-index:999;">
+  
+  <!-- EXIT BUTTON -->
+  <button id="cart-close-btn" style="position:absolute;top:10px;right:10px;padding:4px 10px;border:none;border-radius:6px;background:#e63946;color:#fff;font-weight:700;cursor:pointer;">✕</button>
+
   <h3>Your Cart</h3>
   <div id="cart-items"></div>
   <div style="margin-top:10px;font-weight:700;">Total: ₹<span id="cart-total">0</span></div>
-  <button id="checkout-btn" style="width:100%;padding:10px;margin-top:15px;border:none;border-radius:8px;background:#25D366;color:#fff;font-weight:700;cursor:pointer;">Checkout via WhatsApp</button>
+
+  <!-- CHECKOUT BUTTON -->
+  <button id="checkout-btn" style="width:100%;padding:10px;margin-top:15px;border:none;border-radius:8px;background:#25D366;color:#fff;font-weight:700;cursor:pointer;">
+    Checkout via WhatsApp
+  </button>
 </div>
+
 
 <!-- HERO -->
 <div class="hero">
@@ -1491,29 +1500,7 @@ document.querySelectorAll(".menu-card").forEach(card=>{
 document.getElementById("mobile-wa").onclick = ()=>{
   document.getElementById("checkout-btn").click();
 };
-// ================= ADMIN HANDLE =================
-const ADMIN_PIN = "1234"; // change this
 
-document.getElementById('admin-btn').onclick = ()=>{
-  document.getElementById('admin-panel').style.display='block';
-};
-
-document.getElementById('admin-login').onclick = ()=>{
-  const pin = document.getElementById('admin-pin').value;
-  if(pin === ADMIN_PIN){
-    document.getElementById('admin-actions').style.display='block';
-    alert("Admin access granted");
-  }else{
-    alert("Wrong PIN");
-  }
-};
-document.querySelector('.admin-btn').onclick = () => {
-  document.getElementById('admin-panel').style.display = 'block';
-};
-document.getElementById('admin-btn').addEventListener('click', () => {
-  const panel = document.getElementById('admin-panel');
-  panel.style.display = 'block';
-});
 document.querySelectorAll(".menu-card").forEach(card=>{
   const select = card.querySelector(".weight-select");
   const priceBox = card.querySelector(".menu-price");
@@ -1541,6 +1528,11 @@ document.querySelectorAll(".menu-card").forEach(card=>{
     renderCart();
     cartSidebar.style.right="0";
   });
+});
+// CLOSE CART BUTTON
+const cartCloseBtn = document.getElementById('cart-close-btn');
+cartCloseBtn.addEventListener('click', () => {
+  cartSidebar.style.right = '-320px';
 });
 
 
