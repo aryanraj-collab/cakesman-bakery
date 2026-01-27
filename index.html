@@ -1183,6 +1183,18 @@ body.dark .float-btn {
     aspect-ratio: 1 / 1; /* square on mobile like cakes */
   }
 }
+/* FORCE ALL MENU IMAGES TO LOOK LIKE CAKES */
+.menu-card img {
+  width: 100% !important;
+  height: 180px !important;   /* SAME AS CAKE CARDS */
+  object-fit: cover !important;
+  border-radius: 16px;
+}
+@media (max-width: 768px) {
+  .menu-card img {
+    height: 160px !important;
+  }
+}
 
 
 
