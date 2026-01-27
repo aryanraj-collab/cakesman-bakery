@@ -1456,41 +1456,42 @@ document.getElementById('checkout-btn').addEventListener('click', ()=>{
   );
 });
 
-document.querySelectorAll(".menu-card").forEach(card=>{
+document.querySelectorAll(".menu-card").forEach(card => {
   const select = card.querySelector(".weight-select");
   const priceBox = card.querySelector(".menu-price");
   const addBtn = card.querySelector(".menu-add");
 
-  select.addEventListener("change", ()=>{
-    const price =
-      select.value === "half"
-      ? card.dataset.half
-      : card.dataset.full;
+  // Set initial price
+  let currentPrice = parseInt(card.dataset.half);
+  priceBox.textContent = `₹${currentPrice}`;
 
-    priceBox.textContent = "₹" + price;
+  // When user changes weight
+  select.addEventListener("change", () => {
+    const weight = select.value; // "half" or "full"
+    currentPrice = parseInt(card.dataset[weight]);
+    priceBox.textContent = `₹${currentPrice}`;
   });
 
-  addBtn.addEventListener("click", ()=>{
-    const weight = select.value === "half" ? "Half KG" : "1 KG";
-    const price = parseInt(
-      select.value === "half"
-      ? card.dataset.half
-      : card.dataset.full
-    );
+  // When user clicks "Add to Cart"
+  addBtn.addEventListener("click", () => {
+    const productName = card.dataset.name + " (" + select.options[select.selectedIndex].text.split('–')[0].trim() + ")";
+    const existing = cart.find(item => item.name === productName);
 
-    const name = `${card.dataset.name} (${weight})`;
-
-    const existing = cart.find(item => item.name === name);
-    if(existing){
-      existing.qty++;
-    }else{
-      cart.push({ name, price, qty: 1 });
-    }
+    if (existing) existing.qty++;
+    else cart.push({ name: productName, qty: 1, price: currentPrice });
 
     renderCart();
+
+    // Open the cart sidebar
     cartSidebar.style.right = "0";
+    cartIcon.style.animation = "cart-pulse 0.5s ease";
+    cartIcon.addEventListener("animationend", () => {
+      cartIcon.style.animation = "";
+    }, { once: true });
   });
 });
+
+
 
 document.getElementById("mobile-wa").onclick = ()=>{
   document.getElementById("checkout-btn").click();
