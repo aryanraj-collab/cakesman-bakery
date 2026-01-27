@@ -35,11 +35,7 @@ nav a i{margin-right:6px;}
   </nav>
 </header>
 
-<!-- ADMIN PANEL ALWAYS VISIBLE -->
-<div class="admin-only" style="padding:10px;background:#f4f4f4;border-radius:8px;margin:20px;">
-  <h4>Admin Panel</h4>
-  <button onclick="alert('Edit Item')">Edit Menu Item</button>
-</div>
+
 
     
 /* HERO */
@@ -1169,13 +1165,7 @@ body.dark .float-btn {
     max-width: 200px;  /* optional, keeps it from being too wide */
   }
 }
-.admin-only {
-  position: fixed;
-  top: 100px;
-  right: 20px;
-  width: 200px;
-  z-index: 10000;
-}
+
 
 
 
@@ -1813,31 +1803,7 @@ cartCloseBtn.addEventListener('click', () => {
 
 
 </script>
-<script>
-  // Simple Admin Toggle
-  const adminBtn = document.getElementById('admin-btn');
-  let isAdmin = false;
 
-  adminBtn.addEventListener('click', () => {
-    isAdmin = !isAdmin;
-
-    if(isAdmin){
-      alert('Admin Mode Enabled ✅');
-      document.body.classList.add('admin-mode');
-      // Example: show hidden admin features
-      document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'block');
-    } else {
-      alert('Admin Mode Disabled ❌');
-      document.body.classList.remove('admin-mode');
-      document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
-    }
-  });
-
-  // Hide admin-only elements by default
-  document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'none');
-  });
-</script>
 
 
 
@@ -1862,20 +1828,7 @@ cartCloseBtn.addEventListener('click', () => {
     📞
   </a>
 </div>
-<button id="admin-btn">⚙️</button>
-<script>
-  const adminBtn = document.getElementById('admin-btn');
-  const adminPanel = document.querySelector('.admin-only');
 
-  adminBtn.addEventListener('click', () => {
-    // Toggle visibility
-    if (adminPanel.style.display === 'none' || !adminPanel.style.display) {
-      adminPanel.style.display = 'block';
-    } else {
-      adminPanel.style.display = 'none';
-    }
-  });
-</script>
 
 </body>
 </html>
