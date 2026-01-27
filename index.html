@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1482,114 +1483,15 @@ body.dark .float-btn {
     </div>
 
   </div>
+</section>
+<section class="menu-poster">
+  <h2>Pastry & Snacks Menu</h2>
+  <p class="sub">Quick bites & sweet treats</p>
 
-
-
-  
-   <!-- PASTRY SECTION FIXED -->
-<h2 class="menu-title">Pastry</h2>
-<div class="cards">
-
-  
-
- 
-
-  <div class="menu-card" data-name="Pineapple Pastry" data-price="35">
-    <img src="images/pastry-pineapple.jpg">
-    <h4>Pineapple Pastry</h4>
-    <div class="menu-price">₹35</div>
-    <button class="menu-add">Add to Cart</button>
+  <div class="poster-wrapper">
+    <img src="images/pastry-snacks-menu.jpg" alt="Pastry and Snacks Menu">
   </div>
-
-<div class="menu-card" data-name="Black Forest Pastry" data-price="40">
-    <img src="images/pastry-blackforest.jpg">
-    <h4>Black Forest Pastry</h4>
-    <div class="menu-price">₹40</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-  <div class="menu-card" data-name="Chocolate Pastry" data-price="45">
-    <img src="images/pastry-chocolate.jpg">
-    <h4>Chocolate Pastry</h4>
-    <div class="menu-price">₹45</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-  <div class="menu-card" data-name="Butterscotch Pastry" data-price="40">
-    <img src="images/pastry-butterscotch.jpg">
-    <h4>Butterscotch Pastry</h4>
-    <div class="menu-price">₹40</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-  <div class="menu-card" data-name="Strawberry Pastry" data-price="40">
-    <img src="images/pastry-strawberry.jpg">
-    <h4>Strawberry Pastry</h4>
-    <div class="menu-price">₹40</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-  <div class="menu-card" data-name="Vanilla Pastry" data-price="35">
-    <img src="images/pastry-vanilla.jpg">
-    <h4>Vanilla Pastry</h4>
-    <div class="menu-price">₹35</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-  <div class="menu-card" data-name="Red Velvet Pastry" data-price="50">
-    <img src="images/pastry-redvelvet.jpg">
-    <h4>Red Velvet Pastry</h4>
-    <div class="menu-price">₹50</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-</div>
-
-<!-- SNACKS SECTION FIXED -->
-<h2 class="menu-title">Snacks</h2>
-<div class="cards">
-
-  <div class="menu-card" data-name="Veg Patties" data-price="15">
-    <img src="images/snack-veg-patties.jpg">
-    <h4>Veg Patties</h4>
-    <div class="menu-price">₹15</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-  <div class="menu-card" data-name="Paneer Tikka" data-price="25">
-    <img src="images/snack-paneer-tikka.jpg">
-    <h4>Paneer Tikka</h4>
-    <div class="menu-price">₹25</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-  <div class="menu-card" data-name="Veg Sandwich" data-price="30">
-    <img src="images/snack-veg-sandwich.jpg">
-    <h4>Veg Sandwich</h4>
-    <div class="menu-price">₹30</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-  <div class="menu-card" data-name="Cheese Balls" data-price="20">
-    <img src="images/snack-cheese-balls.jpg">
-    <h4>Cheese Balls</h4>
-    <div class="menu-price">₹20</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-  <div class="menu-card" data-name="Spring Roll" data-price="25">
-    <img src="images/snack-spring-roll.jpg">
-    <h4>Spring Roll</h4>
-    <div class="menu-price">₹25</div>
-    <button class="menu-add">Add to Cart</button>
-  </div>
-
-</div>
-
-   
-   
-   
-
-
+</section>
 
  
 
@@ -1760,6 +1662,20 @@ function attachQtyListeners() {
   });
 }
 
+document.querySelectorAll('.order').forEach((btn,index)=>{
+  btn.addEventListener('click', ()=>{
+    const card = btn.closest('.card');
+    const productName = card.querySelector('h3').innerText;
+    const price = parseInt(card.querySelector('.price').innerText.replace(/₹/,''));
+    const existing = cart.find(item=>item.name===productName);
+    if(existing) existing.qty++;
+    else cart.push({name:productName,qty:1,price:price});
+    renderCart();
+    cartSidebar.style.right='0';
+    cartIcon.style.animation = 'cart-pulse 0.5s ease';
+    cartIcon.addEventListener('animationend', ()=>{cartIcon.style.animation='';},{once:true});
+  });
+});
 
 cartIcon.addEventListener('click', ()=>{
   cartSidebar.style.right = cartSidebar.style.right==='0px' ? '-320px' : '0';
@@ -1828,6 +1744,34 @@ document.getElementById("mobile-wa").onclick = ()=>{
   document.getElementById("checkout-btn").click();
 };
 
+document.querySelectorAll(".menu-card").forEach(card=>{
+  const select = card.querySelector(".weight-select");
+  const priceBox = card.querySelector(".menu-price");
+  const addBtn = card.querySelector(".menu-add");
+
+  select.addEventListener("change", ()=>{
+    const price = select.value === "half"
+      ? card.dataset.half
+      : card.dataset.full;
+    priceBox.textContent = "₹" + price;
+  });
+
+  addBtn.addEventListener("click", ()=>{
+    const weight = select.value === "half" ? "Half KG" : "1 KG";
+    const price = parseInt(select.value === "half"
+      ? card.dataset.half
+      : card.dataset.full);
+
+    const name = `${card.dataset.name} (${weight})`;
+    const existing = cart.find(i=>i.name===name);
+
+    if(existing) existing.qty++;
+    else cart.push({name, price, qty:1});
+
+    renderCart();
+    cartSidebar.style.right="0";
+  });
+});
 const cartCloseBtn = document.getElementById('cart-close-btn');
 
 cartIcon.addEventListener('click', () => {
