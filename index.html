@@ -902,6 +902,36 @@ body.dark .menu-card img {
   }
 
 }
+/* MOBILE NAV FIX */
+@media (max-width: 768px) {
+  header nav {
+    display: flex;
+    flex-direction: column;  /* vertical stack */
+    gap: 12px;               /* spacing between buttons */
+    margin-top: 16px;
+    align-items: center;
+  }
+
+  header nav a {
+    font-size: 16px;          /* slightly bigger for touch */
+    padding: 10px 20px;       /* make them easier to tap */
+    border-radius: 12px;
+    background: #fdebd3;      /* nice button look */
+    color: #e63946;
+    width: 90%;                /* full-ish width */
+    text-align: center;
+  }
+
+  body.dark header nav a {
+    background: #1e1e1e;
+    color: #d4af37;
+  }
+
+  header nav a:hover {
+    background: #e63946;
+    color: #fff;
+  }
+}
 
 
 
@@ -986,9 +1016,10 @@ body.dark .menu-card img {
 
   <div class="best-grid">
     <div class="best-item">🎂 Chocolate Truffle Cake</div>
-    <div class="best-item">🧁 Classic Vanilla Cupcake</div>
+    <div class="best-item">🍰 Fresh Fruit Cake</div>
     <div class="best-item">🍩 Fresh Cream Doughnuts</div>
     <div class="best-item">🥐 Butter Croissants</div>
+
   </div>
 </section>
 
