@@ -1534,6 +1534,15 @@ const cartCloseBtn = document.getElementById('cart-close-btn');
 cartCloseBtn.addEventListener('click', () => {
   cartSidebar.style.right = '-320px';
 });
+// CLOSE CART BUTTON
+document.addEventListener("DOMContentLoaded", () => {
+  const cartSidebar = document.getElementById('cart-sidebar');
+  const cartCloseBtn = document.getElementById('cart-close-btn');
+
+  cartCloseBtn.addEventListener('click', () => {
+    cartSidebar.style.right = '-320px';
+  });
+});
 
 
 
