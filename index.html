@@ -1525,36 +1525,17 @@ document.querySelectorAll(".menu-card").forEach(card=>{
     cartSidebar.style.right="0";
   });
 });
-// CLOSE CART BUTTON
-const cartCloseBtn = document.getElementById('cart-close-btn');
-cartCloseBtn.addEventListener('click', () => {
-  cartSidebar.style.right = '-320px';
-});
-// CLOSE CART BUTTON
-document.addEventListener("DOMContentLoaded", () => {
-  const cartSidebar = document.getElementById('cart-sidebar');
-  const cartCloseBtn = document.getElementById('cart-close-btn');
-
-  cartCloseBtn.addEventListener('click', () => {
-    cartSidebar.style.right = '-320px';
-  });
-});
-// CART SIDEBAR TOGGLE & EXIT BUTTON
 const cartCloseBtn = document.getElementById('cart-close-btn');
 
-// Open cart when clicking cart icon
 cartIcon.addEventListener('click', () => {
-  if (cartSidebar.style.right === '0px') {
-    cartSidebar.style.right = '-320px';
-  } else {
-    cartSidebar.style.right = '0';
-  }
+  cartSidebar.style.right =
+    cartSidebar.style.right === '0px' ? '-320px' : '0';
 });
 
-// Close cart when clicking exit button
 cartCloseBtn.addEventListener('click', () => {
   cartSidebar.style.right = '-320px';
 });
+
 
 
 
