@@ -1024,6 +1024,20 @@ body.dark .float-btn {
     width: 100%;
   }
 }
+/* 📱 FORCE WHY-CHOOSE TO VERTICAL ON MOBILE */
+@media (max-width: 768px) {
+  section[class*="why"] > div,
+  section[id*="why"] > div {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px;
+    align-items: stretch;
+  }
+
+  section[class*="why"] > div > * {
+    width: 100% !important;
+  }
+}
 
 
 
