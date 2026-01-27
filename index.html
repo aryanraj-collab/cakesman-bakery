@@ -608,6 +608,41 @@ html, body{
   transform: none !important;
   visibility: visible !important;
 }
+/* ===== FORCE CART VISIBILITY (FINAL DEBUG FIX) ===== */
+
+/* CART / CLICKED CONTENT */
+.cart,
+.cart-container,
+.cart-panel,
+.cart-modal,
+.cart-drawer,
+.menu-cart,
+[class*="cart"]{
+  position: fixed !important;
+  z-index: 99999 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* FORCE TEXT & BUTTONS TO SHOW */
+.cart *,
+[class*="cart"] *{
+  color: #000000 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* REMOVE INVISIBLE OVERLAYS */
+.overlay,
+.backdrop,
+.modal-bg,
+[class*="overlay"],
+[class*="backdrop"]{
+  display: none !important;
+}
 
 
 </style>
