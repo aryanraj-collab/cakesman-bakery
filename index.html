@@ -1770,100 +1770,9 @@ cartCloseBtn.addEventListener('click', () => {
   cartSidebar.style.right = '-320px';
 });
 
-// ===== SWIPE TO CLOSE CART ON MOBILE =====
-let startX = 0;
-let currentX = 0;
-let isSwiping = false;
 
-cartSidebar.addEventListener('touchstart', (e) => {
-  if (window.innerWidth <= 768) { // only for mobile
-    startX = e.touches[0].clientX;
-    isSwiping = true;
-  }
-});
-
-cartSidebar.addEventListener('touchmove', (e) => {
-  if (!isSwiping) return;
-  currentX = e.touches[0].clientX;
-  const deltaX = currentX - startX;
-  if (deltaX < 0) { // swiping left
-    cartSidebar.style.transform = `translateX(${deltaX}px)`;
-  }
-});
-
-cartSidebar.addEventListener('touchend', () => {
-  if (!isSwiping) return;
-  const deltaX = currentX - startX;
-  if (deltaX < -50) { // swipe threshold
-    cartSidebar.style.right = '-320px';
-  }
-  cartSidebar.style.transform = 'translateX(0)';
-  isSwiping = false;
-});
-// ===== WORKING SWIPE TO CLOSE CART ON MOBILE =====
-if (window.innerWidth <= 768) {
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  cartSidebar.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-  });
-
-  cartSidebar.addEventListener('touchmove', (e) => {
-    touchEndX = e.touches[0].clientX;
-    let deltaX = touchEndX - touchStartX;
-    if (deltaX < 0) { // swiping left
-      cartSidebar.style.right = `${-Math.min(320, Math.abs(deltaX))}px`;
-    }
-  });
-
-  cartSidebar.addEventListener('touchend', () => {
-    let deltaX = touchEndX - touchStartX;
-    if (deltaX < -80) { // swipe threshold
-      cartSidebar.style.right = '-320px'; // close cart
-    } else {
-      cartSidebar.style.right = '0'; // reset to open
-    }
-  });
-}
-// ===== MOBILE DRAGGABLE CART SIDEBAR =====
-if (window.innerWidth <= 768) {
-  let startX = 0;
-  let currentX = 0;
-  let isDragging = false;
-
-  cartSidebar.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    cartSidebar.style.transition = 'none'; // disable smooth transition while dragging
-  });
-
-  cartSidebar.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    currentX = e.touches[0].clientX;
-    let deltaX = currentX - startX;
-    if (deltaX < 0) { // only allow dragging left
-      cartSidebar.style.right = `${Math.min(320, -deltaX)}px`;
-    }
-  });
-
-  cartSidebar.addEventListener('touchend', () => {
-    isDragging = false;
-    cartSidebar.style.transition = 'right 0.3s ease'; // re-enable smooth transition
-
-    let deltaX = currentX - startX;
-    if (deltaX < -100) { // swipe threshold
-      cartSidebar.style.right = '-320px'; // close cart
-    } else {
-      cartSidebar.style.right = '0'; // snap back open
-    }
-
-    // reset coordinates
-    startX = 0;
-    currentX = 0;
-  });
-}
-
+   
+ 
 
 
 
@@ -1891,6 +1800,67 @@ if (window.innerWidth <= 768) {
     📞
   </a>
 </div>
+<script>
+const cartSidebar = document.getElementById('cart-sidebar');
+
+if (window.innerWidth <= 768) {
+  let startX = 0;
+  let currentX = 0;
+  let isDragging = false;
+  let sidebarWidth = cartSidebar.offsetWidth;
+
+  cartSidebar.style.transition = 'transform 0.3s ease';
+  cartSidebar.style.transform = 'translateX(100%)'; // initially hidden
+
+  // function to open cart
+  function openCart() {
+    cartSidebar.style.transform = 'translateX(0)';
+  }
+
+  // function to close cart
+  function closeCart() {
+    cartSidebar.style.transform = 'translateX(100%)';
+  }
+
+  // Exit button still works
+  document.getElementById('cart-close-btn').addEventListener('click', closeCart);
+
+  // Start touch
+  cartSidebar.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    cartSidebar.style.transition = 'none';
+  });
+
+  // Move touch
+  cartSidebar.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    currentX = e.touches[0].clientX;
+    let deltaX = currentX - startX;
+    if (deltaX < 0) { // dragging left
+      cartSidebar.style.transform = `translateX(${Math.min(-deltaX, sidebarWidth)}px)`;
+    }
+  });
+
+  // End touch
+  cartSidebar.addEventListener('touchend', () => {
+    isDragging = false;
+    cartSidebar.style.transition = 'transform 0.3s ease';
+    let deltaX = currentX - startX;
+
+    if (deltaX < -80) {
+      // swiped enough to close
+      closeCart();
+    } else {
+      // snap back open
+      openCart();
+    }
+
+    startX = 0;
+    currentX = 0;
+  });
+}
+</script>
 
 
 
