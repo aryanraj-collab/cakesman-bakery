@@ -962,7 +962,15 @@ body.dark .menu-card img {
 
 <!-- CART SIDEBAR -->
 <div id="cart-sidebar" style="position:fixed;top:0;right:-320px;height:100vh;width:300px;background:#fff;box-shadow:-5px 0 30px rgba(0,0,0,0.2);padding:20px;overflow-y:auto;transition:right 0.4s;z-index:999;">
-  
+  <!-- CART BACKDROP -->
+<div id="cart-backdrop" style="
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+  z-index:9998;
+  display:none;
+"></div>
+
   <!-- EXIT BUTTON -->
   <button id="cart-close-btn" style="position:absolute;top:10px;right:10px;padding:4px 10px;border:none;border-radius:6px;background:#e63946;color:#fff;font-weight:700;cursor:pointer;">✕</button>
 
@@ -1543,6 +1551,44 @@ document.addEventListener("DOMContentLoaded", () => {
     cartSidebar.style.right = '-320px';
   });
 });
+// CART SIDEBAR TOGGLE & EXIT BUTTON
+const cartCloseBtn = document.getElementById('cart-close-btn');
+
+// Open cart when clicking cart icon
+cartIcon.addEventListener('click', () => {
+  if (cartSidebar.style.right === '0px') {
+    cartSidebar.style.right = '-320px';
+  } else {
+    cartSidebar.style.right = '0';
+  }
+});
+
+// Close cart when clicking exit button
+cartCloseBtn.addEventListener('click', () => {
+  cartSidebar.style.right = '-320px';
+});
+const cartBackdrop = document.getElementById('cart-backdrop');
+
+// Function to open cart
+function openCart() {
+  cartSidebar.style.right = '0';
+  cartBackdrop.style.display = 'block';
+}
+
+// Function to close cart
+function closeCart() {
+  cartSidebar.style.right = '-320px';
+  cartBackdrop.style.display = 'none';
+}
+
+// Cart icon click opens cart
+cartIcon.addEventListener('click', openCart);
+
+// Exit button closes cart
+cartCloseBtn.addEventListener('click', closeCart);
+
+// Clicking outside (backdrop) also closes cart
+cartBackdrop.addEventListener('click', closeCart);
 
 
 
