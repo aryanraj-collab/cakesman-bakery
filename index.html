@@ -668,6 +668,31 @@ html, body{
   background: rgba(0,0,0,0.4);
   z-index: 10000;
 }
+/* ===== FIX MENU VISIBILITY ===== */
+.menu-section,
+.menu-selection,
+.menu-grid,
+.menu-card,
+.menu-card img {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+}
+/* ===== VISIBILITY HOTFIX ===== */
+.menu-selection,
+.menu-grid,
+.menu-card {
+  position: relative !important;
+  height: auto !important;
+  min-height: unset !important;
+  overflow: visible !important;
+}
+
+.menu-card img {
+  display: block !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
 
 
 </style>
