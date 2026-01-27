@@ -1863,6 +1863,19 @@ cartCloseBtn.addEventListener('click', () => {
   </a>
 </div>
 <button id="admin-btn">⚙️</button>
+<script>
+  const adminBtn = document.getElementById('admin-btn');
+  const adminPanel = document.querySelector('.admin-only');
+
+  adminBtn.addEventListener('click', () => {
+    // Toggle visibility
+    if (adminPanel.style.display === 'none' || !adminPanel.style.display) {
+      adminPanel.style.display = 'block';
+    } else {
+      adminPanel.style.display = 'none';
+    }
+  });
+</script>
 
 </body>
 </html>
