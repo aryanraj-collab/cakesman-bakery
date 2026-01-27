@@ -1498,9 +1498,9 @@ body.dark .float-btn {
 
   <div class="menu-card">
     <img src="images/blackforest.jpg">
-    <h3>Black Forest Pastry</h3>
-    <p class="price">₹40</p>
-    <button class="order">Add to Cart</button>
+    <h4>Black Forest Pastry</h4>
+    <p class="menu-price">₹40</p>
+    <button class="menu-add">Add to Cart</button>
   </div>
 
   <div class="menu-card">
@@ -1764,9 +1764,9 @@ function attachQtyListeners() {
 
 document.querySelectorAll('.order').forEach((btn,index)=>{
   btn.addEventListener('click', ()=>{
-    const card = btn.closest('.card');
-    const productName = card.querySelector('h3').innerText;
-    const price = parseInt(card.querySelector('.price').innerText.replace(/₹/,''));
+    const card = btn.closest('.menu-card');
+    const productName = card.querySelector('h4').innerText;
+    const price = parseInt(card.querySelector('.menu-price').innerText.replace(/₹/,''));
     const existing = cart.find(item=>item.name===productName);
     if(existing) existing.qty++;
     else cart.push({name:productName,qty:1,price:price});
