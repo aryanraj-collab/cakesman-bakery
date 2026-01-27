@@ -1496,12 +1496,16 @@ body.dark .float-btn {
 </div>
 
 
-  <div class="menu-card">
-    <img src="images/blackforest.jpg">
-    <h4>Black Forest Pastry</h4>
-    <p class="menu-price">₹40</p>
-    <button class="menu-add">Add to Cart</button>
-  </div>
+<div class="menu-card">
+  <img src="images/pastry.jpg">
+
+  <h4>Black Forest Pastry</h4>
+
+  <div class="menu-price">₹40</div>
+
+  <button class="menu-add">Add to Cart</button>
+</div>
+
 
   <div class="menu-card">
     <img src="images/butterscotch.jpg">
@@ -1762,20 +1766,6 @@ function attachQtyListeners() {
   });
 }
 
-document.querySelectorAll('.order').forEach((btn,index)=>{
-  btn.addEventListener('click', ()=>{
-    const card = btn.closest('.menu-card');
-    const productName = card.querySelector('h4').innerText;
-    const price = parseInt(card.querySelector('.menu-price').innerText.replace(/₹/,''));
-    const existing = cart.find(item=>item.name===productName);
-    if(existing) existing.qty++;
-    else cart.push({name:productName,qty:1,price:price});
-    renderCart();
-    cartSidebar.style.right='0';
-    cartIcon.style.animation = 'cart-pulse 0.5s ease';
-    cartIcon.addEventListener('animationend', ()=>{cartIcon.style.animation='';},{once:true});
-  });
-});
 
 cartIcon.addEventListener('click', ()=>{
   cartSidebar.style.right = cartSidebar.style.right==='0px' ? '-320px' : '0';
