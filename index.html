@@ -1095,24 +1095,24 @@ section {
 <script>
 // SCROLL FADE-IN
 // SAFE SCROLL FADE (only for sections that WANT animation)
-const animatedSections = document.querySelectorAll(
-  '.hero, section.animate, footer'
-);
+//const animatedSections = document.querySelectorAll(
+//  '.hero, section.animate, footer'
+//);
 
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-        observer.unobserve(entry.target);
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
+//const observer = new IntersectionObserver(
+//  (entries) => {
+    //entries.forEach(entry => {
+    //  if (entry.isIntersecting) {
+    //    entry.target.style.opacity = '1';
+     //   entry.target.style.transform = 'translateY(0)';
+        //observer.unobserve(entry.target);
+    //  }
+  //  });
+  //},
+  //{ threshold: 0.15 }
+//);
 
-animatedSections.forEach(sec => observer.observe(sec));
+//animatedSections.forEach(sec => observer.observe(sec));
 
 
 // DARK MODE TOGGLE
