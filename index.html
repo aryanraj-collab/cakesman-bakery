@@ -608,24 +608,7 @@ html, body{
   transform: none !important;
   visibility: visible !important;
 }
-/* ===== FORCE CART VISIBILITY (FINAL DEBUG FIX) ===== */
 
-/* CART / CLICKED CONTENT */
-.cart,
-.cart-container,
-.cart-panel,
-.cart-modal,
-.cart-drawer,
-.menu-cart,
-[class*="cart"]{
-  position: fixed !important;
-  z-index: 99999 !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
-  background: #ffffff !important;
-  color: #000000 !important;
-}
 
 /* FORCE TEXT & BUTTONS TO SHOW */
 .cart *,
@@ -642,6 +625,44 @@ html, body{
 [class*="overlay"],
 [class*="backdrop"]{
   display: none !important;
+}
+/* ===== FINAL CART PANEL FIX (SAFE) ===== */
+
+/* CART PANEL / DRAWER ONLY */
+.cart-panel,
+.cart-drawer,
+.cart-modal{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100vw;
+  max-width: 400px;
+  height: 100vh;
+  background: #ffffff;
+  color: #000000;
+  z-index: 10000;
+  overflow-y: auto;
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* CART CONTENT */
+.cart-panel *,
+.cart-drawer *,
+.cart-modal *{
+  color: #000000;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* BACKDROP */
+.cart-backdrop,
+.cart-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 9999;
 }
 
 
