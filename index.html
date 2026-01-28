@@ -1205,7 +1205,51 @@ html {
   overscroll-behavior: contain;
 }
 
+/* ===== PREMIUM SCROLLBAR (CART ONLY) ===== */
 
+/* Chrome, Edge, Safari */
+#cart-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+#cart-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#cart-sidebar::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #d4af37,
+    #b8962e
+  );
+  border-radius: 10px;
+}
+
+/* Hover effect */
+#cart-sidebar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #e6c75a,
+    #c9a23f
+  );
+}
+
+/* Firefox */
+#cart-sidebar {
+  scrollbar-width: thin;
+  scrollbar-color: #d4af37 transparent;
+}
+
+/* 📱 Bigger product images on mobile */
+@media (max-width: 768px) {
+  .menu-card img,
+  .cake-card img,
+  .menu-item img {
+    height: 180px;   /* increase image size */
+    width: 100%;
+    object-fit: cover;
+  }
+}
 
 
 </style>
