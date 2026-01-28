@@ -1191,6 +1191,19 @@ body.dark .float-btn {
   height: auto;
 }
 
+#admin-toggle{
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  z-index: 9999;
+  background: #111;
+  color: gold;
+  border: none;
+  padding: 12px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+}
 
 
 
@@ -1931,7 +1944,53 @@ cartCloseBtn.addEventListener('click', () => {
 
 
    
- 
+ let adminMode = false;
+
+document.getElementById("admin-toggle").onclick = () => {
+  const pass = prompt("Enter Admin Password");
+
+  if (pass !== "cakesman123") {
+    alert("Wrong password");
+    return;
+  }
+
+  adminMode = !adminMode;
+  alert(adminMode ? "Admin Mode ON" : "Admin Mode OFF");
+
+  document.querySelectorAll(".menu-card").forEach(card => {
+    card.querySelectorAll("[data-half],[data-full]").forEach(()=>{});
+  });
+
+  enablePriceEdit();
+};
+
+function enablePriceEdit(){
+  document.querySelectorAll(".menu-card").forEach(card=>{
+    const priceBox = card.querySelector(".menu-price");
+    priceBox.contentEditable = adminMode;
+    priceBox.style.border = adminMode ? "1px dashed red" : "none";
+
+    priceBox.onblur = ()=>{
+      if(!adminMode) return;
+
+      const newPrice = parseInt(priceBox.innerText.replace("₹",""));
+      if(isNaN(newPrice)) return;
+
+      card.dataset.full = newPrice;
+      localStorage.setItem(card.dataset.name, newPrice);
+    };
+  });
+}
+window.addEventListener("DOMContentLoaded", ()=>{
+  document.querySelectorAll(".menu-card").forEach(card=>{
+    const savedPrice = localStorage.getItem(card.dataset.name);
+    if(savedPrice){
+      card.dataset.full = savedPrice;
+      card.querySelector(".menu-price").innerText = "₹" + savedPrice;
+    }
+  });
+});
+
 
 
 
@@ -1962,6 +2021,7 @@ cartCloseBtn.addEventListener('click', () => {
     📞
   </a>
 </div>
+<button id="admin-toggle">⚙️</button>
 
 
 </body>
