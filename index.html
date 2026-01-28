@@ -1133,22 +1133,8 @@ body.dark .float-btn {
     max-height: 160px !important;
   }
 }
-/* FORCE PASTRY & SNACK IMAGES TO LOOK LIKE CAKES */
-.menu-image,
-.card-img,
-.menu-card .image {
-  height: 180px;
-  background-size: cover;
-  background-position: center;
-  border-radius: 16px;
-}
 
-@media (max-width: 768px) {
-  .menu-image,
-  .card-img,
-  .menu-card .image {
-    height: 160px;
-  }
+
 }
 /* DESKTOP FIX — FORCE CAKE-LIKE IMAGES */
 @media (min-width: 769px) {
@@ -1182,6 +1168,27 @@ body.dark .float-btn {
   height: 180px;
   object-fit: cover;
   display: block;
+}
+/* 🔒 MAKE PASTRY & SNACKS SAME AS CAKES */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  align-items: start;
+}
+
+/* LOCK IMAGE SIZE LIKE CAKES */
+.menu-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+  border-radius: 16px;
+}
+
+/* STOP CARD STRETCHING */
+.menu-card {
+  height: auto;
 }
 
 
