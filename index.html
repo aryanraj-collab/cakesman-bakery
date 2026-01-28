@@ -1150,6 +1150,24 @@ body.dark .float-btn {
     height: 160px;
   }
 }
+/* DESKTOP FIX — FORCE CAKE-LIKE IMAGES */
+@media (min-width: 769px) {
+  .menu-section img,
+  .menu-card img,
+  .cards img {
+    width: 100% !important;
+    height: 180px !important;
+    min-height: 180px !important;
+    max-height: 180px !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+}
+@media (min-width: 769px) {
+  .menu-card {
+    align-items: flex-start;
+  }
+}
 
 
 
