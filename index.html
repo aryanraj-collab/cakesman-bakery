@@ -1946,7 +1946,23 @@ cartCloseBtn.addEventListener('click', () => {
    
  let adminMode = false;
 
-document.getElementById("admin-toggle").onclick = () => {
+document.addEventListener("DOMContentLoaded", () => {
+
+  document.getElementById("admin-toggle").onclick = () => {
+    const pass = prompt("Enter Admin Password");
+
+    if (pass !== "cakesman123") {
+      alert("Wrong password");
+      return;
+    }
+
+    adminMode = !adminMode;
+    alert(adminMode ? "Admin Mode ON" : "Admin Mode OFF");
+
+    enablePriceEdit();
+  };
+
+});
   const pass = prompt("Enter Admin Password");
 
   if (pass !== "cakesman123") {
