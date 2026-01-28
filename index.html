@@ -1133,6 +1133,23 @@ body.dark .float-btn {
     max-height: 160px !important;
   }
 }
+/* FORCE PASTRY & SNACK IMAGES TO LOOK LIKE CAKES */
+.menu-image,
+.card-img,
+.menu-card .image {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 16px;
+}
+
+@media (max-width: 768px) {
+  .menu-image,
+  .card-img,
+  .menu-card .image {
+    height: 160px;
+  }
+}
 
 
 
