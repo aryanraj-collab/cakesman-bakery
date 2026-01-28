@@ -1190,6 +1190,20 @@ body.dark .float-btn {
 .menu-card {
   height: auto;
 }
+/* 🌊 SMOOTH SCROLL EVERYWHERE */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 🛒 SMOOTH CART SCROLL */
+#cart-sidebar {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* iOS momentum */
+}
+#cart-sidebar {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
 
 
 
@@ -1524,7 +1538,7 @@ body.dark .float-btn {
 <div class="cards">
 
   <div class="menu-card" data-name="Black Forest Pastry" data-half="40" data-full="40">
-    <img src="images/pastry-blackforest.jpg">
+    <img src="pastry-blackforest.jpg">
     <h4>Black Forest Pastry</h4>
 
     <select class="weight-select">
@@ -1537,7 +1551,7 @@ body.dark .float-btn {
   </div>
 
   <div class="menu-card" data-name="White Forest Pastry" data-half="40" data-full="40">
-    <img src="images/pastry-whiteforest.jpg">
+    <img src="pastry-whiteforest.jpg">
     <h4>White Forest Pastry</h4>
 
     <select class="weight-select">
@@ -1550,7 +1564,7 @@ body.dark .float-btn {
   </div>
 
   <div class="menu-card" data-name="Pineapple Pastry" data-half="35" data-full="35">
-    <img src="images/pastry-pineapple.jpg">
+    <img src="pastry-pineapple.jpg">
     <h4>Pineapple Pastry</h4>
 
     <select class="weight-select">
@@ -1563,7 +1577,7 @@ body.dark .float-btn {
   </div>
 
   <div class="menu-card" data-name="Chocolate Pastry" data-half="45" data-full="45">
-    <img src="images/pastry-chocolate.jpg">
+    <img src="pastry-chocolate.jpg">
     <h4>Chocolate Pastry</h4>
 
     <select class="weight-select">
@@ -1580,7 +1594,7 @@ body.dark .float-btn {
 <div class="cards">
 
   <div class="menu-card" data-name="Veg Patties" data-half="25" data-full="25">
-    <img src="images/snack-veg-patties.jpg">
+    <img src="snack-veg-patties.jpg">
     <h4>Veg Patties</h4>
 
     <select class="weight-select">
@@ -1593,7 +1607,7 @@ body.dark .float-btn {
   </div>
 
   <div class="menu-card" data-name="Paneer Patties" data-half="30" data-full="30">
-    <img src="images/snack-paneer-patties.jpg">
+    <img src="snack-paneer-patties.jpg">
     <h4>Paneer Patties</h4>
 
     <select class="weight-select">
@@ -1606,7 +1620,7 @@ body.dark .float-btn {
   </div>
 
   <div class="menu-card" data-name="Veg Pizza Slice" data-half="50" data-full="50">
-    <img src="images/snack-veg-pizza.jpg">
+    <img src="snack-veg-pizza.jpg">
     <h4>Veg Pizza Slice</h4>
 
     <select class="weight-select">
@@ -1619,7 +1633,7 @@ body.dark .float-btn {
   </div>
 
   <div class="menu-card" data-name="Veg Burger" data-half="45" data-full="45">
-    <img src="images/snack-veg-burger.jpg">
+    <img src="snack-veg-burger.jpg">
     <h4>Veg Burger</h4>
 
     <select class="weight-select">
