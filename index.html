@@ -1923,7 +1923,8 @@ document.getElementById('checkout-btn').addEventListener('click', ()=>{
     total += item.price * item.qty;
   });
 
-  msg += `Total Amount: ₹${total}\n\nPlease confirm availability 🙏`;
+  msg += `Total Amount: ₹${total}\n\nPlease confirm availability 🙏
+  Deliverly Charges Extra`;
 
   window.open(
     "https://wa.me/918808140339?text=" + encodeURIComponent(msg),
